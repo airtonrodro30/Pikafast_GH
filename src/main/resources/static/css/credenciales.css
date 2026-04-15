@@ -1,0 +1,105 @@
+/* --- ESTILOS COMPARTIDOS: LOGIN Y REGISTRO --- */
+
+.login-title {
+    font-size: 3rem; 
+    font-weight: 900;
+    margin-bottom: 25px;
+    color: var(--primary-brown);
+}
+
+.login-label {
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 8px; /* Un poco más de aire */
+    display: block;
+    color: var(--primary-brown);
+}
+
+/* Ajuste para iconos en labels (específico del registro) */
+.login-label i {
+    margin-right: 8px;
+    font-size: 1.1rem;
+}
+
+.login-link {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.login-link:hover {
+    color: var(--primary-brown) !important;
+    text-decoration: underline !important;
+}
+
+/* --- CONTENEDORES DE INPUT --- */
+.input-group-pikafast {
+    border: 2px solid var(--primary-brown);
+    border-radius: 15px;
+    overflow: hidden;
+    background: white;
+}
+
+.input-group-pikafast .form-control { 
+    border: none; 
+    padding: 10px; 
+    box-shadow: none !important; /* Quita el resplandor azul de Bootstrap */
+}
+
+.input-group-pikafast .input-group-text { 
+    background: transparent; 
+    border: none; 
+}
+
+/* --- BOTONES --- */
+.btn-pikafast {
+    background-color: var(--primary-yellow);
+    color: var(--primary-brown);
+    border-radius: 15px;
+    font-weight: 800;
+    padding: 12px;
+    border: none;
+    box-shadow: 0 4px 0px #D9A465;
+    transition: all 0.2s ease;
+}
+
+.btn-pikafast:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0px #D9A465;
+}
+
+.separator-text { 
+    font-size: 14px; 
+    color: #ccc;
+    font-weight: bold;
+}
+
+/* --- BOTONES SOCIALES --- */
+.btn-social-google, .btn-social-apple {
+    background: #f1f1f1;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    margin-bottom: 10px;
+    transition: background 0.2s;
+}
+
+.btn-social-google:hover, .btn-social-apple:hover {
+    background: #e5e5e5;
+}
+
+/* --- RESPONSIVIDAD --- */
+@media (max-width: 991px) {
+    .login-title {
+        font-size: 2.2rem;
+        text-align: center;
+    }
+}
