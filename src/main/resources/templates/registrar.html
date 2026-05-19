@@ -60,33 +60,34 @@
             <div class="col-lg-6 text-center d-none d-lg-block">
                 <img src="assets/img/register.png" class="img-fluid" style="max-height: 60%;" alt="Registro Pikafast">
             </div>
-
+            <!-- Formulario Registro -->
             <div class="col-lg-5 offset-lg-1 px-4">
                 <h1 class="login-title mb-4">Registro</h1>
-                <form id="register-form">
+                <form th:action="@{/registrar}" method="post" th:object="${usuario}" id="register-form" >
                     
                     <label class="login-label"><i class="bi bi-person me-2"></i>Nombre</label>
                     <div class="input-group input-group-pikafast mb-3">
-                        <input type="text" class="form-control" placeholder="Tu nombre completo" required>
+                        <input type="text" th:field="*{nombre}" class="form-control" placeholder="Tu nombre completo" required>
                     </div>
 
                     <label class="login-label"><i class="bi bi-envelope me-2"></i>Correo</label>
                     <div class="input-group input-group-pikafast mb-3">
-                        <input type="email" class="form-control" placeholder="nombre@ejemplo.com" required>
-                    </div>
-
-                    <label class="login-label"><i class="bi bi-telephone me-2"></i>Teléfono</label>
-                    <div class="input-group input-group-pikafast mb-3">
-                        <input type="tel" class="form-control" placeholder="999 999 999" required>
+                        <input type="email" th:field="*{email}" class="form-control" placeholder="nombre@ejemplo.com" required>
                     </div>
 
                     <label class="login-label"><i class="bi bi-lock me-2"></i>Contraseña</label>
                     <div class="input-group input-group-pikafast mb-4">
-                        <input type="password" id="password-input" class="form-control" required>
+                        <input type="password" th:field="*{contrasenia}" id="password-input" class="form-control" required>
                         <span class="input-group-text btn-toggle-pass" style="cursor: pointer;">
                             <i class="bi bi-eye-slash bi-custom" style="font-size: 1.2rem;"></i>
                         </span>
                     </div>
+                    
+                    <label class="login-label"><i class="bi bi-telephone me-2"></i>Teléfono</label>
+                    <div class="input-group input-group-pikafast mb-3">
+                        <input type="tel" th:field="*{telefono}" class="form-control" placeholder="999 999 999" required>
+                    </div>
+
 
                     <button type="submit" class="btn btn-pikafast w-100 mb-3">Registrarse</button>
                     
@@ -99,7 +100,7 @@
                         <i class="bi bi-apple me-2"></i> Continuar con Apple
                     </button>
                     
-                    <p class="text-center small mt-4">¿Ya tienes cuenta? <a href="login.html" class="login-link fw-bold">Inicia Sesión</a></p>
+                    <p class="text-center small mt-4">¿Ya tienes cuenta? <a th:href="@{/login}" class="login-link fw-bold">Inicia Sesión</a></p>
                 </form>
             </div>
         </div>

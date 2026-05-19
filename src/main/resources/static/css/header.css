@@ -1,0 +1,103 @@
+@import url('./base.css');
+
+/* --- HEADER STICKY --- */
+.header-wrapper {
+    background-color: var(--bg-header);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    height: 100px;
+}
+
+.header-container {
+    height: 100%;
+}
+
+.logo-container {
+    height: 100px;
+    display: flex;
+    align-items: center;
+}
+
+.logo-container img {
+    height: 100%;
+    width: auto;
+    display: block;
+}
+
+.nav-link-custom {
+    text-decoration: none;
+    color: var(--primary-brown);
+    font-weight: 700;
+    margin-right: 20px;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+/* --- CALENDARIO (PASTILLA REDONDEADA) --- */
+.order-date-outer-container {
+    background-color: var(--primary-yellow);
+    height: 80px; 
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    cursor: pointer;
+    border-radius: 20px; /* Redondeo del bloque amarillo */
+    transition: transform 0.2s;
+    position: relative;
+}
+
+.order-date-outer-container:hover {
+    transform: scale(1.02);
+}
+
+.date-badge-inner {
+    position: relative;
+    background-color: var(--bg-header); /* Mismo tono que el fondo para limpieza */
+    height: 60px;
+    border-radius: 15px; /* Redondeo de la pastilla interna */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.date-label {
+    font-size: 10px;
+    color: var(--primary-brown);
+    margin-bottom: -2px;
+}
+
+.date-value {
+    font-weight: 800;
+    font-size: 13px;
+    color: var(--primary-brown);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Input invisible que cubre toda la pastilla para capturar el click */
+.input-datepicker {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 10;
+}
+
+/* --- MENÚ DE USUARIO --- */
+.user-icon-bg {
+    background-color: var(--bg-header);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

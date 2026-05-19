@@ -1,0 +1,31 @@
+:root {
+    --primary-yellow: #F8BC73;
+    --primary-brown: #682D03;
+    --bg-header: #FFF8EF;
+    --bg-footer-top: #F0CB7D;
+    --bg-footer-bottom: #F0BB47;
+    --white: #FFFFFF;
+}
+
+body {
+    font-family: "SF Pro", sans-serif;
+    margin: 0;
+    color: var(--primary-brown);
+    background-color: var(--white);
+    overflow-x: hidden;
+}
+
+/* --- ICONOS BOOTSTRAP PERSONALIZADOS --- */
+.bi-custom {
+    color: var(--primary-brown) !important;
+    -webkit-text-stroke: 1.2px var(--primary-brown);
+    font-size: 1.8rem;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* --- RESET Y UTILIDADES --- */
+a, a:hover {
+    text-decoration: none !important;
+    color: inherit;
+}
