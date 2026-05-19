@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pikafast - Carrito de Compras</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+<link rel="stylesheet" href="assets/css/style.css" th:href="@{/css/style.css}">
+<link rel="stylesheet" href="assets/css/credenciales.css" th:href="@{/css/credenciales.css}">
+<link rel="stylesheet" href="assets/css/catalog.css" th:href="@{/css/catalog.css}">
+</head>
+<body>
+
+    <header class="header-wrapper">
+        <div class="container-fluid px-0 h-100">
+            <div class="row w-100 align-items-center g-0 h-100">
+                
+                <div class="col-4 d-none d-lg-flex align-items-center ps-5">
+                    <nav>
+                        <a href="#" class="nav-link-custom">Bocaditos Salados</a>
+                        <a href="#" class="nav-link-custom">Dulces</a>
+                        <a href="#" class="nav-link-custom">Mini Boxes</a>
+                    </nav>
+                </div>
+
+                <div class="col-4 d-flex justify-content-center h-100">
+                    <a th:href="@{/}" class="logo-container">
+                        <img src="assets/img/logoHeader.png" alt="Pikafast">
+                    </a>
+                </div>
+
+                <div class="col-8 col-lg-4 d-flex align-items-center justify-content-end h-100 pe-5">
+                    
+                    <div class="order-date-outer-container me-4">
+                        <div class="date-badge-inner">
+                            <span class="date-label">Realizando un pedido para el:</span>
+                            <div class="date-value">
+                                <span id="display-date">05/09/2025</span>
+                                <i class="bi bi-calendar3"></i>
+                            </div>
+                            <input type="date" class="input-datepicker" id="date-picker">
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="me-4 d-flex align-items-center">
+                        <i class="bi bi-bag bi-custom"></i>
+                    </a>
+                    
+                    <div id="user-menu-container"></div>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <main class="container my-5 py-5">
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="catalog-banner">
+                    <img src="assets/img/banner_dulces.jpg" th:src="@{/img/banner_dulces.jpg}" alt="Nuestros productos premium" class="img-fluid w-100 rounded-3">
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <aside class="col-lg-3">
+                <div class="filter-sidebar p-4">
+                    <h5 class="filter-title mb-3">Ordenar por:</h5>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input custom-check" type="checkbox" id="sortPriceMin">
+                        <label class="form-check-label" for="sortPriceMin">Precio Menor</label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input custom-check" type="checkbox" id="sortPriceMax">
+                        <label class="form-check-label" for="sortPriceMax">Precio Mayor</label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input custom-check" type="checkbox" id="sortAlphaAZ">
+                        <label class="form-check-label" for="sortAlphaAZ">Nombre A-Z</label>
+                    </div>
+                    <div class="form-check mb-4">
+                        <input class="form-check-input custom-check" type="checkbox" id="sortAlphaZA">
+                        <label class="form-check-label" for="sortAlphaZA">Nombre Z-A</label>
+                    </div>
+
+                    <h5 class="filter-title mb-3">Filtrar por:</h5>
+                    <div class="mb-3">
+                        <label class="form-label filter-label">Tipo:</label>
+                        <select class="form-select custom-select">
+                            <option selected>TODOS</option>
+                            <option>Bocaditos Salados</option>
+                            <option>Dulces</option>
+                            <option>Mini Boxes</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label filter-label">Precio (S/):</label>
+                        <div class="mb-2">
+                            <input type="number" class="form-control custom-input" placeholder="Máx: S/. 0.00" id="priceMax">
+                        </div>
+                        <div>
+                            <input type="number" class="form-control custom-input" placeholder="Mín: S/. 0.00" id="priceMin">
+                        </div>
+                    </div>
+
+                    <p class="filter-note mb-4">* Los precios aparecen por 25 unidades de bocaditos</p>
+
+                    <button class="btn btn-filter w-100">Filtrar</button>
+                </div>
+            </aside>
+
+            <section class="col-lg-9">
+                <div class="d-flex align-items-center mb-4">
+                    <a href="javascript:history.back()" class="text-decoration-none text-dark me-2">
+                        <i class="bi bi-arrow-left-circle-fill fs-3 text-brown"></i>
+                    </a>
+                    <h2 class="catalog-section-title my-0">Dulces</h2>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-md-6 col-xl-4">
+                        <div class="catalog-product-card">
+                            <div class="product-img-wrapper">
+                                <img src="assets/img/cupcakes.jpg" th:src="@{/img/cupcakes.jpg}" alt="Cupcakes">
+                            </div>
+                            <div class="catalog-product-body">
+                                <h4 class="product-title">Cupcakes</h4>
+                                <p class="product-description">Pequeños panes rellenos de pollo sazonado, suaves y deliciosos, perfectos para cualquier momento del día.</p>
+                                <div class="product-footer-meta">
+                                    <span class="product-price">S/. 25.50</span>
+                                    <button class="btn btn-add-cart" title="Agregar al carrito">
+                                        <i class="bi bi-plus-lg"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-xl-4">
+                        <div class="catalog-product-card">
+                            <div class="product-img-wrapper">
+                                <img src="assets/img/alfajores.jpg" th:src="@{/img/alfajores.jpg}" alt="Alfajores">
+                            </div>
+                            <div class="catalog-product-body">
+                                <h4 class="product-title">Alfajores</h4>
+                                <p class="product-description">Deliciosos alfajores artesanales, elaborados con masa suave y delicada, rellenos de manjar blanco y espolvoreados con azúcar.</p>
+                                <div class="product-footer-meta">
+                                    <span class="product-price">S/. 20.00</span>
+                                    <button class="btn btn-add-cart" title="Agregar al carrito">
+                                        <i class="bi bi-plus-lg"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-xl-4">
+                        <div class="catalog-product-card">
+                            <div class="product-img-wrapper">
+                                <img src="assets/img/pie_manzana.jpg" th:src="@{/img/pie_manzana.jpg}" alt="Mini Pie de Manzana">
+                            </div>
+                            <div class="catalog-product-body">
+                                <h4 class="product-title">Mini Pie de Manzana</h4>
+                                <p class="product-description">Deliciosos pies de manzana de tamaño personal, con masa crocante y relleno suave con un toque de canela.</p>
+                                <div class="product-footer-meta">
+                                    <span class="product-price">S/. 15.99</span>
+                                    <button class="btn btn-add-cart" title="Agregar al carrito">
+                                        <i class="bi bi-plus-lg"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer-pikafast">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 mb-4"><img src="assets/img/logo.png" width="140"></div>
+                <div class="col-md-2">
+                    <h6>Sobre Nosotros</h6>
+                    <a href="#">Historia</a><a href="#">Misión</a><a href="#">Visión</a>
+                </div>
+                <div class="col-md-4">
+                    <h6>Contacto</h6>
+                    <p><i class="bi bi-telephone-fill me-2"></i> 999 999 886</p>
+                    <p><i class="bi bi-geo-alt-fill me-2"></i> Av. San Bartolo 137 Huancayo</p>
+                </div>
+                <div class="col-md-3">
+                    <h6>Preguntas Frecuentes</h6>
+                    <a href="#">¿Cómo pedir?</a><a href="#">Política de Devoluciones</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="footer-bottom-bar text-center">
+        <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+            <span>CopyRight 2025 PIKAFAST all rights reserved</span>
+            <div class="social-icons">
+                <i class="bi bi-instagram"></i><i class="bi bi-facebook"></i><i class="bi bi-tiktok"></i>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>
