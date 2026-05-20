@@ -246,6 +246,7 @@ body {
   padding: 8px 12px;
   font-weight: 700;
   border: none;
+  text-decoration: none;
 }
 
 .btn-edit {
