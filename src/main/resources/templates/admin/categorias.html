@@ -1,0 +1,87 @@
+
+<main th:fragment="dashboardContent" class="admin-content">
+    <div class="admin-topbar">
+        <h1 class="admin-page-title">Mantenimiento de Categorías</h1>
+        <p class="admin-page-subtitle">Crear, editar o eliminar categorías del catálogo.</p>
+    </div>
+
+    <section class="admin-panel mb-4">
+        <div class="admin-header">
+            <div>
+                <h2 class="section-title mb-1">Listado de categorías</h2>
+                <p class="section-subtitle mb-0">Categorías que aparecen en el header del sitio del cliente.</p>
+            </div>
+            <button class="btn admin-btn" data-bs-toggle="modal" data-bs-target="#categoriaModal">
+                <i class="bi bi-plus-lg me-2"></i>Nueva categoría
+            </button>
+        </div>
+
+        <div class="row g-3 mt-2">
+            <div class="col-lg-4">
+                <div class="input-group admin-search">
+                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                    <input type="text" class="form-control" placeholder="Buscar categoría...">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="row g-4">
+        <div class="col-md-6 col-xl-4">
+            <div class="category-admin-card">
+                <div class="category-admin-icon">
+                    <i class="bi bi-border-all"></i>
+                </div>
+                <h3>BOCADITOS SALADOS</h3>
+                <p>Deliciosos bocaditos salados para toda ocasión</p>
+                <span class="category-admin-count">12 productos</span>
+                <div class="product-admin-actions mt-3">
+                    <button class="btn-edit" data-bs-toggle="modal" data-bs-target="#categoriaModal">
+                        <i class="bi bi-pencil-square me-1"></i>Editar
+                    </button>
+                    <button class="btn-delete">
+                        <i class="bi bi-trash3 me-1"></i>Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-4">
+            <div class="category-admin-card">
+                <div class="category-admin-icon">
+                    <i class="bi bi-cup-straw"></i>
+                </div>
+                <h3>DULCES</h3>
+                <p>Antojitos dulces artesanales y postres</p>
+                <span class="category-admin-count">8 productos</span>
+                <div class="product-admin-actions mt-3">
+                    <button class="btn-edit" data-bs-toggle="modal" data-bs-target="#categoriaModal">
+                        <i class="bi bi-pencil-square me-1"></i>Editar
+                    </button>
+                    <button class="btn-delete">
+                        <i class="bi bi-trash3 me-1"></i>Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-4">
+            <div class="category-admin-card">
+                <div class="category-admin-icon">
+                    <i class="bi bi-box2-fill"></i>
+                </div>
+                <h3>MINI BOXES</h3>
+                <p>Boxes personalizados con variedad de productos</p>
+                <span class="category-admin-count">5 productos</span>
+                <div class="product-admin-actions mt-3">
+                    <button class="btn-edit" data-bs-toggle="modal" data-bs-target="#categoriaModal">
+                        <i class="bi bi-pencil-square me-1"></i>Editar
+                    </button>
+                    <button class="btn-delete">
+                        <i class="bi bi-trash3 me-1"></i>Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

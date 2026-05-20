@@ -1,0 +1,177 @@
+
+<main th:fragment="dashboardContent" class="admin-content">
+    <div class="admin-topbar">
+        <h1 class="admin-page-title">Monitor de Inventario</h1>
+        <p class="admin-page-subtitle">Gestionar ingredientes y materiales de empaque.</p>
+    </div>
+
+    <section class="admin-panel mb-4">
+        <div class="admin-header">
+            <div>
+                <h2 class="section-title mb-1">Inventario general</h2>
+                <p class="section-subtitle mb-0">Ingredientes para preparación y cajas/bolsas para envío.</p>
+            </div>
+            <button class="btn admin-btn" data-bs-toggle="modal" data-bs-target="#inventarioModal">
+                <i class="bi bi-plus-lg me-2"></i>Nuevo ítem
+            </button>
+        </div>
+
+        <div class="row g-3 mt-2">
+            <div class="col-lg-4">
+                <div class="input-group admin-search">
+                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                    <input type="text" class="form-control" placeholder="Buscar ítem...">
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <select class="form-select admin-form-select">
+                    <option selected>Todos los tipos</option>
+                    <option>Ingrediente</option>
+                    <option>Caja/Bolsa</option>
+                </select>
+            </div>
+            <div class="col-lg-3">
+                <select class="form-select admin-form-select">
+                    <option selected>Estado del stock</option>
+                    <option>Stock bajo</option>
+                    <option>Stock normal</option>
+                </select>
+            </div>
+        </div>
+
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Ítem</th>
+                    <th>Tipo</th>
+                    <th>Stock actual</th>
+                    <th>Unidad</th>
+                    <th>Stock mínimo</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><i class="bi bi-flower1 me-2"></i>Harina de trigo</td>
+                    <td><span class="badge badge-admin">Ingrediente</span></td>
+                    <td><span class="stock-low">5 kg</span></td>
+                    <td>kg</td>
+                    <td>10 kg</td>
+                    <td><span class="badge badge-inactivo">Stock bajo</span></td>
+                    <td>
+                        <button class="btn-edit" data-bs-toggle="modal" data-bs-target="#inventarioModal">
+                            <i class="bi bi-pencil-square me-1"></i>Editar
+                        </button>
+                        <button class="btn-delete">
+                            <i class="bi bi-trash3 me-1"></i>Eliminar
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td><i class="bi bi-flower2 me-2"></i>Pollo fresco</td>
+                    <td><span class="badge badge-admin">Ingrediente</span></td>
+                    <td><span class="stock-ok">25 kg</span></td>
+                    <td>kg</td>
+                    <td>10 kg</td>
+                    <td><span class="badge badge-activo">Stock ok</span></td>
+                    <td>
+                        <button class="btn-edit" data-bs-toggle="modal" data-bs-target="#inventarioModal">
+                            <i class="bi bi-pencil-square me-1"></i>Editar
+                        </button>
+                        <button class="btn-delete">
+                            <i class="bi bi-trash3 me-1"></i>Eliminar
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td><i class="bi bi-bag me-2"></i>Bolsa kraft pequeña</td>
+                    <td><span class="badge badge-cliente">Empaque</span></td>
+                    <td><span class="stock-low">50 u</span></td>
+                    <td>unidades</td>
+                    <td>100 u</td>
+                    <td><span class="badge badge-inactivo">Stock bajo</span></td>
+                    <td>
+                        <button class="btn-edit" data-bs-toggle="modal" data-bs-target="#inventarioModal">
+                            <i class="bi bi-pencil-square me-1"></i>Editar
+                        </button>
+                        <button class="btn-delete">
+                            <i class="bi bi-trash3 me-1"></i>Eliminar
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td><i class="bi bi-box-seam me-2"></i>Caja Mini Boxes</td>
+                    <td><span class="badge badge-cliente">Empaque</span></td>
+                    <td><span class="stock-ok">80 u</span></td>
+                    <td>unidades</td>
+                    <td>30 u</td>
+                    <td><span class="badge badge-activo">Stock ok</span></td>
+                    <td>
+                        <button class="btn-edit" data-bs-toggle="modal" data-bs-target="#inventarioModal">
+                            <i class="bi bi-pencil-square me-1"></i>Editar
+                        </button>
+                        <button class="btn-delete">
+                            <i class="bi bi-trash3 me-1"></i>Eliminar
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td><i class="bi bi-speedometer2 me-2"></i>Salsa Bouchet</td>
+                    <td><span class="badge badge-admin">Ingrediente</span></td>
+                    <td><span class="stock-low">2 L</span></td>
+                    <td>litros</td>
+                    <td>5 L</td>
+                    <td><span class="badge badge-inactivo">Stock bajo</span></td>
+                    <td>
+                        <button class="btn-edit" data-bs-toggle="modal" data-bs-target="#inventarioModal">
+                            <i class="bi bi-pencil-square me-1"></i>Editar
+                        </button>
+                        <button class="btn-delete">
+                            <i class="bi bi-trash3 me-1"></i>Eliminar
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <h2 class="section-title mb-3">Resumen de stock bajo</h2>
+    <section class="row g-4">
+        <div class="col-md-6 col-xl-4">
+            <div class="inventory-admin-card">
+                <h3><i class="bi bi-flower1 text-warning me-2"></i>Harina de trigo</h3>
+                <p><strong>Stock actual:</strong> <span class="stock-low">5 kg</span></p>
+                <p><strong>Stock mínimo:</strong> 10 kg</p>
+                <p><strong>Faltante:</strong> <span class="stock-low">5 kg</span></p>
+                <button class="btn admin-btn mt-2 w-100">
+                    <i class="bi bi-cart-plus me-1"></i>Reponer
+                </button>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-4">
+            <div class="inventory-admin-card">
+                <h3><i class="bi bi-bag text-warning me-2"></i>Bolsa kraft pequeña</h3>
+                <p><strong>Stock actual:</strong> <span class="stock-low">50 u</span></p>
+                <p><strong>Stock mínimo:</strong> 100 u</p>
+                <p><strong>Faltante:</strong> <span class="stock-low">50 u</span></p>
+                <button class="btn admin-btn mt-2 w-100">
+                    <i class="bi bi-cart-plus me-1"></i>Reponer
+                </button>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-4">
+            <div class="inventory-admin-card">
+                <h3><i class="bi bi-speedometer2 text-warning me-2"></i>Salsa Bouchet</h3>
+                <p><strong>Stock actual:</strong> <span class="stock-low">2 L</span></p>
+                <p><strong>Stock mínimo:</strong> 5 L</p>
+                <p><strong>Faltante:</strong> <span class="stock-low">3 L</span></p>
+                <button class="btn admin-btn mt-2 w-100">
+                    <i class="bi bi-cart-plus me-1"></i>Reponer
+                </button>
+            </div>
+        </div>
+    </section>
+</main>
