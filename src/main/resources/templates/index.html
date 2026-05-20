@@ -1,38 +1,174 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>TODO supply a title</title>
+        <title>Pikafast - Inicio</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
         <!-- CSS BootStrap -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
+              rel="stylesheet"
+              integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"
+              crossorigin="anonymous">
+
         <!-- Iconos BootStrap -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <link rel="stylesheet"
+              href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
         <!-- CSS Local -->
-        <link rel="stylesheet" th:href="@{/css/base.css}"/>
-        <!-- CSS del Header -->
-        <link rel="stylesheet" th:href="@{/css/header.css}"/>
-        <!-- CSS del Footer -->
-        <link rel="stylesheet" th:href="@{/css/footer.css}"/>
-        <!-- Estilos del Carrito -->
-        <link rel="stylesheet" th:href="@{/css/carrito.css}"/>
+        <link rel="stylesheet" th:href="@{/css/base.css}">
+        <link rel="stylesheet" th:href="@{/css/header.css}">
+        <link rel="stylesheet" th:href="@{/css/footer.css}">
+        <link rel="stylesheet" th:href="@{/css/carrito.css}">
+        <link rel="stylesheet" th:href="@{/css/index.css}">
     </head>
+
     <body>
         <!-- Seccion Header -->
-        <th:block th:replace="~{fragments/header :: headerFragment}"></th:block>
+    <th:block th:replace="~{fragments/header :: headerFragment}"></th:block>
 
-        <div>TODO write content</div>
+    <!-- CAROUSEL -->
+    <section class="slider_section position-relative">
+        <div class="banner position-absolute z-1 w-100">
+            <div class="banner_content d-none d-sm-flex">
+                <div class="banner_content_left">
+                    <i class="bi bi-calendar4 bi-custom"></i>
+                    <div>OTRA FECHA</div>
+                    <div class=" fs-2 fw-bold">COMPRA<br> PROGRAMADA</div>
+                    <button>Pedir</button>
+                </div>
+                <div class="banner_divider"></div>
+                <div class="banner_content_right">
+                    <i class="bi bi-clock bi-custom"></i>
+                    <div>HOY</div>
+                    <div class=" fs-2 fw-bold">COMPRA<br> DEL DÍA</div>
+                    <button>Pedir</button>
+                </div>
+            </div>
+        </div>
 
-        <!-- Seccion Footer -->
-        <th:block th:replace="~{fragments/footer :: footerFragment}"></th:block>
+        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active"
+                    aria-current="true"></button>
 
-        <!-- JS BootStrap -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous">
-        </script>
-        
-        <!-- JS Local -->
-        <script type="module" th:src="@{/js/index.js}"></script>
-    </body>
+                <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1"></button>
+
+                <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2"></button>
+            </div>
+
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="slider-item-box">
+                        <img src="assets/img/alitas_bbq.png" class="carousel_img" alt="slide 01" />
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="slider-item-box">
+                        <img src="assets/img/alfajores.png" class="carousel_img" alt="slide 02" />
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="slider-item-box">
+                        <img src="assets/img/petipanes.png" class="carousel_img" alt="slide 03" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controles del Carousel -->
+            <div class="carousel-controls">
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCTOS MÁS VENDIDOS -->
+    <section class="best_sellers_section">
+        <div class="container-fluid px-4 px-lg-5">
+            <div class="best_sellers_heading text-center">
+                <p class="best_sellers_kicker mb-1">Productos</p>
+                <h2 class="best_sellers_title mb-0">MÁS VENDIDOS</h2>
+            </div>
+
+            <div class="row g-4 best_sellers_grid">
+                <div class="col-12 col-lg-6">
+                    <article class="best_seller_card">
+                        <img src="assets/img/petipanes.png" alt="Petit panes" class="best_seller_img" />
+                        <div class="best_seller_overlay"></div>
+                        <div class="best_seller_info">
+                            <h3 class="mb-0">PETIT PANES</h3>
+                            <p class="mb-0">S/. 50 por 50 unidades</p>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="col-12 col-lg-6">
+                    <article class="best_seller_card">
+                        <img src="assets/img/alfajores.png" alt="Alfajores" class="best_seller_img" />
+                        <div class="best_seller_overlay"></div>
+                        <div class="best_seller_info">
+                            <h3 class="mb-0">ALFAJORES</h3>
+                            <p class="mb-0">S/. 50 por 50 unidades</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ATENCIÓN A EVENTOS CORPORATIVOS -->
+    <section class="corporate_events_section">
+        <div class="corporate_events_bg">
+            <div class="corporate_events_overlay d-flex justify-content-center align-items-center">
+                <div class="corporate_events_content text-center">
+                    <div class="corporate_events_text_small">Atención a eventos</div>
+                    <div class="corporate_events_text_big">CORPORATIVOS</div>
+                    <a href="#" class="corporate_events_button">Ver más</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOBRE PIKAFAST -->
+    <section class="about_pikafast_section">
+        <div class="container px-4">
+            <div class="row align-items-center gy-4">
+                <div class="col-12 col-lg-4 text-center">
+                    <div class="about_pikafast_heading_small">Sobre</div>
+                    <h2 class="about_pikafast_heading_big mb-0">PIKAFAST</h2>
+                </div>
+                <div class="col-12 col-lg-8">
+                    <p class="about_pikafast_text mb-0">
+                        Pikafast nació en Lima como un pequeño emprendimiento dedicado a ofrecer piqueos y snacks
+                        prácticos, ricos y con ese toque casero que los hace ideales para cualquier ocasión.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seccion Footer -->
+    <th:block th:replace="~{fragments/footer :: footerFragment}"></th:block>
+
+    <!-- JS BootStrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+            crossorigin="anonymous">
+    </script>
+
+    <!-- JS Local -->
+    <script type="module" th:src="@{/js/index.js}"></script>
+</body>
 </html>
