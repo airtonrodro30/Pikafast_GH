@@ -37,9 +37,10 @@ public class ConfigSeguridad {
                 .userDetailsService(userDetailsService) // <-- Enlaza al userDetailsService
                 .authorizeHttpRequests(auth -> auth
                 // Permite que cualquiera entre al registro y login sin autenticarse
+                .requestMatchers( "/").permitAll()
                 .requestMatchers("/assets/**", "/css/**", "/js/**").permitAll()
-                .requestMatchers("/registrar", "/login", "/").permitAll()
-                .requestMatchers("/dashboard/**").hasAnyRole("ADMIN", "USER")
+                .requestMatchers("/registrar", "/login").permitAll()
+                .requestMatchers("/dashboard/**", "/admin/**").hasAnyRole("ADMIN")
                 // Cualquier otra ruta requerirá inicio de sesión
                 .anyRequest().authenticated()
                 )
