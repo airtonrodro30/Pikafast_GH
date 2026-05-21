@@ -88,7 +88,7 @@
 
                     </td>
 
-                    <td>
+                    <td class="d-flex gap-2 align-items-center">
                         <a th:href="@{/dashboard/inventario/editar/{id}(id=${inventario.idInventario})}"
                             class="btn-edit">
 
@@ -149,11 +149,6 @@
                                 </label>
 
                                 <select class="form-select" th:field="*{tipoInventario}" required>
-
-                                    <option value="">
-                                        Seleccionar
-                                    </option>
-
                                     <option value="INGREDIENTE">
                                         Ingrediente
                                     </option>

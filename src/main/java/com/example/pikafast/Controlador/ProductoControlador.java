@@ -1,7 +1,6 @@
 package com.example.pikafast.Controlador;
 
 import com.example.pikafast.Entidad.Producto;
-import com.example.pikafast.Servicio.CategoriaServicio;
 import com.example.pikafast.Servicio.ProductoServicio;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import com.example.pikafast.Servicio.CategoriaServicio;
 
 @Controller
 @RequestMapping("/dashboard/productos")
@@ -36,7 +36,7 @@ public class ProductoControlador {
         model.addAttribute("contentPage", "admin/productos");
 
         model.addAttribute("productos", productoServicio.getList());
-        model.addAttribute("categorias", categoriaServicio.listarCategorias());
+        model.addAttribute("categorias", categoriaServicio.getList());
         model.addAttribute("producto", new Producto());
         return "dashboard";
     }
@@ -80,7 +80,7 @@ public class ProductoControlador {
 
         model.addAttribute("productos", productoServicio.getList());
         model.addAttribute("producto", producto);
-        model.addAttribute("categorias", categoriaServicio.listarCategorias());
+        model.addAttribute("categorias", categoriaServicio.getList());
 
         model.addAttribute("abrirModal", true);
 
