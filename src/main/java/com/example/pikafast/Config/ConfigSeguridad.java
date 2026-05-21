@@ -24,6 +24,7 @@ public class ConfigSeguridad {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
     public AuthenticationSuccessHandler successHandlerOK() {
         return (request, response, authentication) -> {
             response.sendRedirect("/");
