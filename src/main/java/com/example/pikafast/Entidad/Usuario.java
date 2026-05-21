@@ -10,29 +10,28 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-/* @author usuario */
 @Entity
-@Table(name="usuario")
+@Table(name = "usuario")
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_usuario")
     private Integer idUsuario;
-    
+
     private String nombre;
-    
+
     private String email;
-    
+
     private String contrasenia;
-    
+
     private String telefono;
-    
+
     @Enumerated(EnumType.STRING)
     private Rol rol;
-    
+
     private Boolean activo;
-    
-    //Getter & Setter
+
+    // Getter & Setter
     public Integer getIdUsuario() {
         return idUsuario;
     }
@@ -88,5 +87,5 @@ public class Usuario {
     public void setActivo(Boolean activo) {
         this.activo = activo;
     }
-    
+
 }
