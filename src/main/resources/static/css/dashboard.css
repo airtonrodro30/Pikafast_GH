@@ -237,7 +237,7 @@ body {
 .badge-finalizado { background: #a5d6a7; color: #1b5e20; }
 .badge-cancelado { background: #ef9a9a; color: #b71c1c; }
 .badge-admin { background: #ce93d8; color: #4a148c; }
-.badge-cliente { background: #80deea; color: #006064; }
+.badge-empleado { background: #80deea; color: #006064; }
 
 .btn-edit,
 .btn-delete,

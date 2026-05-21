@@ -1,7 +1,10 @@
 package com.example.pikafast.Entidad;
 
+import com.example.pikafast.Enums.Rol;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,9 +27,10 @@ public class Usuario {
     
     private String telefono;
     
-    private String rol;
+    @Enumerated(EnumType.STRING)
+    private Rol rol;
     
-    private Boolean estado;
+    private Boolean activo;
     
     //Getter & Setter
     public Integer getIdUsuario() {
@@ -69,20 +73,20 @@ public class Usuario {
         this.telefono = telefono;
     }
 
-    public String getRol() {
+    public Rol getRol() {
         return rol;
     }
 
-    public void setRol(String rol) {
+    public void setRol(Rol rol) {
         this.rol = rol;
     }
 
-    public Boolean getEstado() {
-        return estado;
+    public Boolean getActivo() {
+        return activo;
     }
 
-    public void setEstado(Boolean estado) {
-        this.estado = estado;
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
     
 }

@@ -42,7 +42,7 @@
                             <div class="col-md-6">
                                 <label>Contraseña</label>
                                 <input type="password"
-                                       name="contraseina"
+                                       name="contrasenia"
                                        class="form-control admin-form-control"
                                        placeholder="Escribe una Contraseña">
                             </div>
@@ -52,14 +52,14 @@
                                 <select class="form-select admin-form-select"
                                         th:field="*{rol}">
                                     <option value="ADMIN">Administrador</option>
-                                    <option value="USER">Usuario</option>
+                                    <option value="EMPLEADO">Empleado</option>
                                 </select>
                             </div>
 
                             <div class="col-md-6">
                                 <label>Estado</label>
                                 <select class="form-select admin-form-select"
-                                        th:field="*{estado}">
+                                        th:field="*{activo}">
                                     <option th:value="true">Activo</option>
                                     <option th:value="false">Inactivo</option>
                                 </select>

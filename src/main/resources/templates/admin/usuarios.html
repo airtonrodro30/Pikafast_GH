@@ -64,8 +64,8 @@
                         <td>
                             <span 
                                 class="badge"
-                                th:classappend="${usuario.rol == 'ADMIN'} ? ' badge-admin' : ' badge-cliente'"
-                                th:text="${usuario.rol}">
+                                th:classappend="${usuario.rol.name == 'ADMIN'} ? ' badge-admin' : ' badge-empleado'"
+                                th:text="${#strings.capitalize(#strings.toLowerCase(usuario.rol.name()))}">
                                 Rol
                             </span>
                         </td>
@@ -73,8 +73,8 @@
                         <td>
                             <span 
                                 class="badge"
-                                th:classappend="${usuario.estado} ? ' badge-activo' : ' badge-inactivo'"
-                                th:text="${usuario.estado} ? 'Activo' : 'Inactivo'">
+                                th:classappend="${usuario.activo} ? ' badge-activo' : ' badge-inactivo'"
+                                th:text="${usuario.activo} ? 'Activo' : 'Inactivo'">
                                 Estado
                             </span>
                         </td>

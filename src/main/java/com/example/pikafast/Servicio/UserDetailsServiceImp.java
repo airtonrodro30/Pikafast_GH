@@ -27,14 +27,14 @@ public class UserDetailsServiceImp implements UserDetailsService {
             throw new UsernameNotFoundException("Usuario no encontrado");
         }
         
-        if (!usuario.getEstado()){
+        if (!usuario.getActivo()){
             throw new UsernameNotFoundException("Usuario está inactivo");
         }
         
         return User.builder()
                 .username(usuario.getEmail()) // Utiliza correo como username
                 .password(usuario.getContrasenia())
-                .roles(usuario.getRol()) // ADMIN, USER
+                .roles(usuario.getRol().name()) // ADMIN
                 .build();
     }
     

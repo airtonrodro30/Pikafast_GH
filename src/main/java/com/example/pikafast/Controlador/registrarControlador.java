@@ -4,6 +4,7 @@ package com.example.pikafast.Controlador;
 //import com.example.WebProyect.Entidad.Cliente;
 //import com.example.WebProyect.Servicio.ClienteServicio;
 import com.example.pikafast.Entidad.Usuario;
+import com.example.pikafast.Enums.Rol;
 import com.example.pikafast.Servicio.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,8 +38,8 @@ public class registrarControlador {
         nuevoUsuario.setContrasenia(contraseniaEncriptada);
 
         // 2. Asignamos los valores por defecto que no vienen del formulario
-        nuevoUsuario.setRol("USER");
-        nuevoUsuario.setEstado(true);
+        nuevoUsuario.setRol(Rol.CLIENTE);
+        nuevoUsuario.setActivo(true);
 
         // 3. Guardamos el objeto que recibimos y modificamos
         Usuario usuarioGuardado = usuarioServicio.save(nuevoUsuario);
