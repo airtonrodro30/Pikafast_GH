@@ -32,7 +32,7 @@ public class UsuarioServicio {
         return usuarioDAO.findByEmail(email);
     }
 
-    // Eliminar un Registro por id (Borrado Logico)
+    // Eliminar un Registro por id
     public void delete(Integer id) {
         usuarioDAO.deleteById(id);
     }

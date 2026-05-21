@@ -1,109 +1,81 @@
-
-<main th:fragment="dashboardContent" class="admin-content">
-    <div class="admin-topbar">
-        <h1 class="admin-page-title">Mantenimiento de Productos</h1>
-        <p class="admin-page-subtitle">Crear, editar o eliminar productos del catálogo.</p>
-    </div>
-
-    <section class="admin-panel mb-4">
-        <div class="admin-header">
-            <div>
-                <h2 class="section-title mb-1">Listado de productos</h2>
-                <p class="section-subtitle mb-0">Gestiona la información visible en el catálogo público.</p>
-            </div>
-            <button class="btn admin-btn" data-bs-toggle="modal" data-bs-target="#productoModal">
-                <i class="bi bi-plus-lg me-2"></i>Nuevo producto
-            </button>
+<div th:fragment="dashboardContent">
+    <main class="admin-content">
+        <div class="admin-topbar">
+            <h1 class="admin-page-title">Mantenimiento de Productos</h1>
+            <p class="admin-page-subtitle">Crear, editar o eliminar productos del catálogo.</p>
         </div>
 
-        <div class="row g-3 mt-2">
-            <div class="col-lg-6">
-                <div class="input-group admin-search">
-                    <span class="input-group-text"><i class="bi bi-search"></i></span>
-                    <input type="text" class="form-control" placeholder="Buscar producto...">
+        <section class="admin-panel mb-4">
+            <div class="admin-header">
+                <div>
+                    <h2 class="section-title mb-1">Listado de productos</h2>
+                    <p class="section-subtitle mb-0">Gestiona la información visible en el catálogo público.</p>
                 </div>
+                <!-- Modal Trigger -->
+                <button class="btn admin-btn" data-bs-toggle="modal" data-bs-target="#productoModal">
+                    <i class="bi bi-plus-lg me-2"></i>Nuevo producto
+                </button>
             </div>
-            <div class="col-lg-3">
-                <select class="form-select admin-form-select">
-                    <option selected>Todos los tipos</option>
-                    <option>Bocaditos Salados</option>
-                    <option>Dulces</option>
-                    <option>Mini Boxes</option>
-                </select>
-            </div>
-            <div class="col-lg-3">
-                <select class="form-select admin-form-select">
-                    <option selected>Ordenar por</option>
-                    <option>Precio menor</option>
-                    <option>Precio mayor</option>
-                    <option>Nombre A-Z</option>
-                </select>
-            </div>
-        </div>
-    </section>
 
-    <section class="row g-4">
-        <div class="col-md-6 col-xl-4">
-            <div class="product-admin-card">
-                <img src="assets/img/panes.jpg" alt="Peti Panes de Pollo">
-                <div class="product-admin-body">
-                    <div class="product-admin-top">
-                        <h2>Peti Panes de Pollo</h2>
-                        <span class="product-admin-price">S/. 5.50</span>
-                    </div>
-                    <p>Pequeños panes rellenos de pollo sazonado, suaves y deliciosos, perfectos para cualquier momento del día.</p>
-                    <div class="product-admin-actions">
-                        <button class="btn btn-edit-product" data-bs-toggle="modal" data-bs-target="#productoModal">
-                            <i class="bi bi-pencil-square me-1"></i>Editar
-                        </button>
-                        <button class="btn btn-delete-product">
-                            <i class="bi bi-trash3 me-1"></i>Eliminar
-                        </button>
+            <div class="row g-3 mt-2">
+                <div class="col-lg-6">
+                    <div class="input-group admin-search">
+                        <span class="input-group-text"><i class="bi bi-search"></i></span>
+                        <input type="text" class="form-control" placeholder="Buscar producto...">
                     </div>
                 </div>
+                <div class="col-lg-3">
+                    <select class="form-select admin-form-select">
+                        <option selected>Todos los tipos</option>
+                        <option>Bocaditos Salados</option>
+                        <option>Dulces</option>
+                        <option>Mini Boxes</option>
+                    </select>
+                </div>
+                <div class="col-lg-3">
+                    <select class="form-select admin-form-select">
+                        <option selected>Ordenar por</option>
+                        <option>Precio menor</option>
+                        <option>Precio mayor</option>
+                        <option>Nombre A-Z</option>
+                    </select>
+                </div>
             </div>
-        </div>
+        </section>
 
-        <div class="col-md-6 col-xl-4">
-            <div class="product-admin-card">
-                <img src="assets/img/alfajores.jpg" alt="Alfajores">
-                <div class="product-admin-body">
-                    <div class="product-admin-top">
-                        <h2>Alfajores</h2>
-                        <span class="product-admin-price">S/. 20.00</span>
-                    </div>
-                    <p>Deliciosos alfajores artesanales, elaborados con masa suave y delicada.</p>
-                    <div class="product-admin-actions">
-                        <button class="btn btn-edit-product" data-bs-toggle="modal" data-bs-target="#productoModal">
-                            <i class="bi bi-pencil-square me-1"></i>Editar
-                        </button>
-                        <button class="btn btn-delete-product">
-                            <i class="bi bi-trash3 me-1"></i>Eliminar
-                        </button>
+        <section class="row g-4">
+            <div th:each="producto :${productos}" class="col-md-6 col-xl-4">
+                <div class="product-admin-card">
+                    <img th:src="@{'/uploaded-images/' + ${producto.imagen}}" alt="Imagen del producto">
+                    <div class="product-admin-body">
+                        <div class="product-admin-top">
+                            <h2 th:text="${producto.nombre}">Producto</h2>
+                            <span th:text="${producto.precio}"
+                                  class="product-admin-price">
+                                S/. 15.50
+                            </span>
+                        </div>
+                        <p th:text="${producto.descripcion}">Producto Descripción</p>
+                        <div class="product-admin-actions">
+                            
+                            <a class="btn btn-edit-product"
+                               th:href="@{/dashboard/productos/editar/{id}(id=${producto.idProducto})}">
+                                <i class="bi bi-pencil-square me-1"></i>Editar
+                            </a>
+                            
+                            <a class="btn btn-delete-product"
+                               th:href="@{/dashboard/productos/eliminar/{id}(id=${producto.idProducto})}"
+                               onclick="return confirm('¿Seguro que deseas eliminar este Producto?')">
+                                <i class="bi bi-trash3 me-1"></i>Eliminar
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-md-6 col-xl-4">
-            <div class="product-admin-card">
-                <img src="assets/img/alitas.jpg" alt="Alitas Bouchet">
-                <div class="product-admin-body">
-                    <div class="product-admin-top">
-                        <h2>Alitas Bouchet</h2>
-                        <span class="product-admin-price">S/. 15.99</span>
-                    </div>
-                    <p>Deliciosas alitas de pollo fritas al punto exacto, cubiertas con nuestra salsa Bouchet.</p>
-                    <div class="product-admin-actions">
-                        <button class="btn btn-edit-product" data-bs-toggle="modal" data-bs-target="#productoModal">
-                            <i class="bi bi-pencil-square me-1"></i>Editar
-                        </button>
-                        <button class="btn btn-delete-product">
-                            <i class="bi bi-trash3 me-1"></i>Eliminar
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-</main>
+        </section>
+    </main>
+    
+    <!-- MODAL -->
+    <th:block th:replace="~{modal/producto-form :: productoFormModal}"></th:block>
+</div>
