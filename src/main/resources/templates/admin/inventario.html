@@ -1,4 +1,3 @@
-
 <main th:fragment="dashboardContent" class="admin-content">
     <div class="admin-topbar">
         <h1 class="admin-page-title">Monitor de Inventario</h1>
@@ -52,89 +51,206 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td><i class="bi bi-flower1 me-2"></i>Harina de trigo</td>
-                    <td><span class="badge badge-admin">Ingrediente</span></td>
-                    <td><span class="stock-low">5 kg</span></td>
-                    <td>kg</td>
-                    <td>10 kg</td>
-                    <td><span class="badge badge-inactivo">Stock bajo</span></td>
+                <tr th:each="inventario : ${inventarios}">
+
                     <td>
-                        <button class="btn-edit" data-bs-toggle="modal" data-bs-target="#inventarioModal">
-                            <i class="bi bi-pencil-square me-1"></i>Editar
-                        </button>
-                        <button class="btn-delete">
-                            <i class="bi bi-trash3 me-1"></i>Eliminar
-                        </button>
+                        <i class="bi bi-box-seam me-2"></i>
+                        <span th:text="${inventario.nombre}"></span>
                     </td>
-                </tr>
-                <tr>
-                    <td><i class="bi bi-flower2 me-2"></i>Pollo fresco</td>
-                    <td><span class="badge badge-admin">Ingrediente</span></td>
-                    <td><span class="stock-ok">25 kg</span></td>
-                    <td>kg</td>
-                    <td>10 kg</td>
-                    <td><span class="badge badge-activo">Stock ok</span></td>
+
                     <td>
-                        <button class="btn-edit" data-bs-toggle="modal" data-bs-target="#inventarioModal">
-                            <i class="bi bi-pencil-square me-1"></i>Editar
-                        </button>
-                        <button class="btn-delete">
-                            <i class="bi bi-trash3 me-1"></i>Eliminar
-                        </button>
+                        <span class="badge badge-admin" th:text="${inventario.tipoInventario}">
+                        </span>
                     </td>
-                </tr>
-                <tr>
-                    <td><i class="bi bi-bag me-2"></i>Bolsa kraft pequeña</td>
-                    <td><span class="badge badge-cliente">Empaque</span></td>
-                    <td><span class="stock-low">50 u</span></td>
-                    <td>unidades</td>
-                    <td>100 u</td>
-                    <td><span class="badge badge-inactivo">Stock bajo</span></td>
+
                     <td>
-                        <button class="btn-edit" data-bs-toggle="modal" data-bs-target="#inventarioModal">
-                            <i class="bi bi-pencil-square me-1"></i>Editar
-                        </button>
-                        <button class="btn-delete">
-                            <i class="bi bi-trash3 me-1"></i>Eliminar
-                        </button>
+                        <span th:classappend="${inventario.stock <= inventario.stockMinimo} ? 'stock-low' : 'stock-ok'">
+
+                            <span th:text="${inventario.stock}"></span>
+                        </span>
                     </td>
-                </tr>
-                <tr>
-                    <td><i class="bi bi-box-seam me-2"></i>Caja Mini Boxes</td>
-                    <td><span class="badge badge-cliente">Empaque</span></td>
-                    <td><span class="stock-ok">80 u</span></td>
-                    <td>unidades</td>
-                    <td>30 u</td>
-                    <td><span class="badge badge-activo">Stock ok</span></td>
+
+                    <td th:text="${inventario.unidadMedida}">
+                    </td>
+
+                    <td th:text="${inventario.stockMinimo}">
+                    </td>
+
                     <td>
-                        <button class="btn-edit" data-bs-toggle="modal" data-bs-target="#inventarioModal">
-                            <i class="bi bi-pencil-square me-1"></i>Editar
-                        </button>
-                        <button class="btn-delete">
-                            <i class="bi bi-trash3 me-1"></i>Eliminar
-                        </button>
+
+                        <span class="badge"
+                            th:classappend="${inventario.stock <= inventario.stockMinimo} ? 'badge-inactivo' : 'badge-activo'">
+
+                            <span th:text="${inventario.stock <= inventario.stockMinimo} ? 'Stock bajo' : 'Stock ok'">
+                            </span>
+
+                        </span>
+
                     </td>
-                </tr>
-                <tr>
-                    <td><i class="bi bi-speedometer2 me-2"></i>Salsa Bouchet</td>
-                    <td><span class="badge badge-admin">Ingrediente</span></td>
-                    <td><span class="stock-low">2 L</span></td>
-                    <td>litros</td>
-                    <td>5 L</td>
-                    <td><span class="badge badge-inactivo">Stock bajo</span></td>
-                    <td>
-                        <button class="btn-edit" data-bs-toggle="modal" data-bs-target="#inventarioModal">
-                            <i class="bi bi-pencil-square me-1"></i>Editar
-                        </button>
-                        <button class="btn-delete">
-                            <i class="bi bi-trash3 me-1"></i>Eliminar
-                        </button>
+
+                    <td class="d-flex gap-2 align-items-center">
+                        <a th:href="@{/dashboard/inventario/editar/{id}(id=${inventario.idInventario})}"
+                            class="btn-edit">
+
+                            <i class="bi bi-pencil-square me-1"></i>
+                            Editar
+                        </a>
+
+                        <a th:href="@{/dashboard/inventario/eliminar/{id}(id=${inventario.idInventario})}"
+                            class="btn-delete">
+
+                            <i class="bi bi-trash3 me-1"></i>
+                            Eliminar
+                        </a>
                     </td>
+
                 </tr>
             </tbody>
         </table>
     </section>
+
+    <!-- MODAL INVENTARIO -->
+    <div class="modal fade" id="inventarioModal" tabindex="-1" aria-hidden="true">
+
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+
+            <div class="modal-content admin-modal">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="bi bi-box-seam me-2"></i>
+                        Nuevo ítem de inventario
+                    </h5>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                    </button>
+                </div>
+
+                <form th:action="@{/dashboard/inventario/guardar}" method="post" th:object="${inventario}">
+                    <input type="hidden" th:field="*{idInventario}">
+
+                    <div class="modal-body">
+
+                        <div class="row g-3">
+
+                            <!-- NOMBRE -->
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    Nombre del ítem
+                                </label>
+
+                                <input type="text" class="form-control" th:field="*{nombre}" required>
+                            </div>
+
+                            <!-- TIPO -->
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    Tipo
+                                </label>
+
+                                <select class="form-select" th:field="*{tipoInventario}" required>
+                                    <option value="INGREDIENTE">
+                                        Ingrediente
+                                    </option>
+
+                                    <option value="ENVASE">
+                                        Envase
+                                    </option>
+
+                                    <option value="EMPAQUE">
+                                        Empaque
+                                    </option>
+
+                                    <option value="DESCARTABLE">
+                                        Descartable
+                                    </option>
+
+                                    <option value="OTRO">
+                                        Otro
+                                    </option>
+
+                                </select>
+                            </div>
+
+                            <!-- STOCK -->
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    Stock actual
+                                </label>
+
+                                <input type="number" step="0.01" class="form-control" th:field="*{stock}" required>
+                            </div>
+
+                            <!-- STOCK MINIMO -->
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    Stock mínimo
+                                </label>
+
+                                <input type="number" step="0.01" class="form-control" th:field="*{stockMinimo}"
+                                    required>
+                            </div>
+
+                            <!-- UNIDAD -->
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    Unidad de medida
+                                </label>
+
+                                <select class="form-select" th:field="*{unidadMedida}" required>
+
+                                    <option value="">
+                                        Seleccionar
+                                    </option>
+
+                                    <option value="UNIDADES">
+                                        Unidades
+                                    </option>
+
+                                    <option value="KG">
+                                        Kilogramos
+                                    </option>
+
+                                    <option value="GRAMOS">
+                                        Gramos
+                                    </option>
+
+                                    <option value="LITROS">
+                                        Litros
+                                    </option>
+
+                                    <option value="ML">
+                                        Mililitros
+                                    </option>
+
+                                </select>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+
+                            Cancelar
+                        </button>
+
+                        <button type="submit" class="btn admin-btn">
+
+                            <i class="bi bi-check-circle me-1"></i>
+                            Guardar ítem
+                        </button>
+
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+
+    </div>
 
     <h2 class="section-title mb-3">Resumen de stock bajo</h2>
     <section class="row g-4">
@@ -174,4 +290,20 @@
             </div>
         </div>
     </section>
+
+    <script th:if="${inventario.idInventario != null}">
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        let modal = new bootstrap.Modal(
+            document.getElementById('inventarioModal')
+        );
+
+        modal.show();
+
+    });
+
+</script>
+
 </main>
+

@@ -24,6 +24,7 @@ public class ConfigSeguridad {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
     public AuthenticationSuccessHandler successHandlerOK() {
         return (request, response, authentication) -> {
             response.sendRedirect("/");
@@ -39,7 +40,7 @@ public class ConfigSeguridad {
                 // Permite que cualquiera entre al registro y login sin autenticarse
                 .requestMatchers( "/").permitAll()
                 .requestMatchers("/assets/**", "/css/**", "/js/**").permitAll()
-                .requestMatchers("/registrar", "/login").permitAll()
+                .requestMatchers("/login", "/registrar", "/uploaded-images/**").permitAll()
                 .requestMatchers("/dashboard/**", "/admin/**").hasAnyRole("ADMIN")
                 // Cualquier otra ruta requerirá inicio de sesión
                 .anyRequest().authenticated()

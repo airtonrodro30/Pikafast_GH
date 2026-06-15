@@ -1,11 +1,11 @@
 package com.example.pikafast.Controlador;
 
 import com.example.pikafast.Entidad.Categoria;
-import com.example.pikafast.Servicio.CategoriaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import com.example.pikafast.Servicio.CategoriaServicio;
 
 @Controller
 @RequestMapping("/dashboard/categorias")
@@ -23,7 +23,7 @@ public class CategoriaControlador {
         model.addAttribute("categoria", new Categoria());
 
         model.addAttribute("listaCategorias",
-                categoriaServicio.listarCategorias());
+                categoriaServicio.getList());
 
         return "dashboard";
     }
@@ -31,7 +31,7 @@ public class CategoriaControlador {
     @PostMapping("/guardar")
     public String guardarCategoria(Categoria categoria){
 
-        categoriaServicio.guardarCategoria(categoria);
+        categoriaServicio.save(categoria);
 
         return "redirect:/dashboard/categorias";
     }
@@ -40,7 +40,7 @@ public class CategoriaControlador {
     @GetMapping("/eliminar/{id}")
     public String eliminarCategoria(@PathVariable Integer id){
 
-        categoriaServicio.eliminarCategoria(id);
+        categoriaServicio.delete(id);
 
         return "redirect:/dashboard/categorias";
     }
