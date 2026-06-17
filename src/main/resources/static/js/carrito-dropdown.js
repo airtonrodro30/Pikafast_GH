@@ -2,7 +2,7 @@
 const carritoIcono = document.getElementById("cart-icon");
 
 const carritoContainer = document.getElementById("cart-container");
-carritoContainer.classList.add("show-cart-container");
+carritoContainer.classList.add("show-cart-container", "hide-cart-container");
 
 const productosContainer = document.createElement("div");
 productosContainer.classList.add("products-container");
@@ -14,7 +14,7 @@ carritoInfo.innerHTML = `
         <h6>Total:</h6>
         <span class="total-pagar">S/. 0</span>
     </div>
-    <button class="btn btn-success">Realizar Pedido</button>
+    <a href="/carrito" class="btn btn-success">Realizar Pedido</a>
 `;
 
 // Mensaje "carrito vacío" separado
@@ -26,7 +26,7 @@ mensajeVacio.textContent = "El carrito está vacío";
 carritoContainer.appendChild(productosContainer);
 carritoContainer.appendChild(carritoInfo);
 carritoContainer.appendChild(mensajeVacio);
-// Añaadir carrito container al icono
+// Añadir carrito container al icono
 carritoIcono.appendChild(carritoContainer);
 
 // Variables
