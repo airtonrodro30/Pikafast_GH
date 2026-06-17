@@ -1,0 +1,62 @@
+
+<aside class="col-lg-3 filter-sidebar p-4" th:fragment="asideFragment">
+    <form
+        th:action="@{/productos}"
+        method="get"
+        >
+        <h5 class="filter-title mb-3">Ordenar por:</h5>
+        <div class="form-check mb-2">
+            <input class="form-check-input custom-check" type="radio" name="orden" value="precio-menor" id="sortPriceMin">
+            <label class="form-check-label" for="sortPriceMin">Precio Menor</label>
+        </div>
+        <div class="form-check mb-2">
+            <input class="form-check-input custom-check" type="radio" name="orden" value="precio-mayor" id="sortPriceMax">
+            <label class="form-check-label" for="sortPriceMax">Precio Mayor</label>
+        </div>
+        <div class="form-check mb-2">
+            <input class="form-check-input custom-check" type="radio" name="orden" value="nombre-az" id="sortAlphaAZ">
+            <label class="form-check-label" for="sortAlphaAZ">Nombre A-Z</label>
+        </div>
+        <div class="form-check mb-4">
+            <input class="form-check-input custom-check" type="radio" name="orden" value="nombre-za" id="sortAlphaZA">
+            <label class="form-check-label" for="sortAlphaZA">Nombre Z-A</label>
+        </div>
+
+        <h5 class="filter-title mb-3">Filtrar por:</h5>
+        <div class="mb-3">
+            <label class="form-label filter-label">Tipo:</label>
+            <select class="form-select custom-select" name="categoriaId">
+                <option 
+                    value=""
+                >
+                    TODOS
+                </option> 
+                <option
+                    th:each="categoria : ${listaCategorias}"
+                    th:value="${categoria.idCategoria}"
+                    th:text="${categoria.nombre}"
+                >
+                </option>
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label filter-label">Precio (S/):</label>
+            <div class="mb-2">
+                <input type="number" name="precioMin" class="form-control custom-input" placeholder="Mín: S/. 0.00" id="priceMin" min="0">
+            </div>
+            <div>
+                <input type="number" name="precioMax" class="form-control custom-input" placeholder="Máx: S/. 0.00" id="priceMax" min="0">
+            </div>
+        </div>
+
+        <p class="filter-note mb-4">* Los precios aparecen por 25 unidades de bocaditos</p>
+
+        <button
+            type="submit"
+            class="btn btn-filter w-100">
+            Filtrar
+        </button>
+    </form>
+</aside>
+
