@@ -1,0 +1,138 @@
+
+.show-cart-container {
+    position: absolute;
+    top: 120%;
+    right: 0%;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    padding: 0px;
+    z-index: 9999;
+    min-width: 350px;
+    max-height: 90vh;
+    height: auto;
+}
+
+.hide-cart-container {
+    display: none;
+}
+
+
+.products-container { 
+    padding: 10px;
+    
+    /*Scroll de Carrito*/
+    max-height: 350px; /* o cualquier valor que necesites */
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0; /* Espacio entre filas */
+    border-bottom: 1px solid #eee;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.cart-item .cantidad {
+    font-weight: bold;
+    margin: 0;
+    width: 20px;
+    text-align: center;
+}
+
+.cart-item .btn-sm {
+    padding: 2px;
+    width: 24px;
+    height: 24px;
+    font-size: 14px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-container {
+    margin: 0;
+}
+
+.img-container > img {
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.product-info {
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.item-name {
+    font-weight: 600;
+    margin:0px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px; /* Ajusta según tu diseño */
+}
+
+.item-price {
+    margin: 0;
+    min-width: 50px;
+    font-weight: bold;
+}
+
+.btn-delete-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+}
+
+
+.cart-info{
+    border-top: 1px solid #eee;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /*Eje X*/
+    justify-content: center;
+}
+
+.cart-total{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    gap: 10px;
+}
+
+.cart-total h6, .total-pagar{
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.cart-total h6{
+    transform: translateY(3px);
+}
+
+.cart-empty {
+    padding: 20px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 16px;
+    color: #888;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

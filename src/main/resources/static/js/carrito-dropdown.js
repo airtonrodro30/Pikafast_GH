@@ -1,8 +1,15 @@
+const CLAVE_CARRITO = "carrito";
+const EVENTO_CARRITO_ACTUALIZADO = "carrito:actualizado";
+
 // Crear contenedores
 const carritoIcono = document.getElementById("cart-icon");
-
 const carritoContainer = document.getElementById("cart-container");
-carritoContainer.classList.add("show-cart-container");
+
+if (!carritoIcono || !carritoContainer) {
+    throw new Error("No se encontraron los elementos base del carrito.");
+}
+
+carritoContainer.classList.add("show-cart-container", "hide-cart-container");
 
 const productosContainer = document.createElement("div");
 productosContainer.classList.add("products-container");
@@ -14,7 +21,7 @@ carritoInfo.innerHTML = `
         <h6>Total:</h6>
         <span class="total-pagar">S/. 0</span>
     </div>
-    <button class="btn btn-success">Realizar Pedido</button>
+    <a href="/carrito" class="btn btn-success">Realizar Pedido</a>
 `;
 
 // Mensaje "carrito vacío" separado
@@ -22,17 +29,25 @@ const mensajeVacio = document.createElement("p");
 mensajeVacio.classList.add("cart-empty", "d-none");
 mensajeVacio.textContent = "El carrito está vacío";
 
-// Añadir al DOM
-carritoContainer.appendChild(productosContainer);
-carritoContainer.appendChild(carritoInfo);
-carritoContainer.appendChild(mensajeVacio);
-// Añaadir carrito container al icono
-carritoIcono.appendChild(carritoContainer);
-
 // Variables
 let allProducts = [];
 
 const valorTotal = carritoInfo.querySelector(".total-pagar");
+
+function obtenerCarritoDesdeLocalStorage() {
+    const carritoGuardado = localStorage.getItem(CLAVE_CARRITO);
+    if (!carritoGuardado) {
+        return [];
+    }
+
+    try {
+        const carrito = JSON.parse(carritoGuardado);
+        return Array.isArray(carrito) ? carrito : [];
+    } catch (error) {
+        console.error("No se pudo leer el carrito guardado.", error);
+        return [];
+    }
+}
 
 // Funciones auxiliares
 function actualizarTotal() {
@@ -118,18 +133,12 @@ function renderizarCarrito() {
     });
 }
 
-
-
 // Evento agregar producto
 document.addEventListener("DOMContentLoaded", () => {
-    // ⬇️ Recuperar carrito guardado al cargar
-    const carritoGuardado = localStorage.getItem("carrito");
-    if (carritoGuardado) {
-        allProducts = JSON.parse(carritoGuardado);
-        renderizarCarrito();
-        actualizarTotal();
-        actualizarEstadoCarrito();
-    }
+    allProducts = obtenerCarritoDesdeLocalStorage();
+    renderizarCarrito();
+    actualizarTotal();
+    actualizarEstadoCarrito();
 
     const botonesAgregar = document.querySelectorAll(".btn-add-cart");
 
@@ -159,8 +168,6 @@ document.addEventListener("DOMContentLoaded", () => {
     actualizarEstadoCarrito(); // Solo por si acaso
 });
 
-
-
 // Mostrar/Ocultar carrito
 // Bloquear la propagación del evento de Bootstrap
 carritoIcono.addEventListener("click", (e) => {
@@ -173,18 +180,31 @@ carritoContainer.addEventListener("click", (e) => {
     e.stopPropagation();
 });
 
+// Guardar Datos en Local Storage
+function guardarCarritoEnLocalStorage() {
+    localStorage.setItem(CLAVE_CARRITO, JSON.stringify(allProducts));
+    window.dispatchEvent(new CustomEvent(EVENTO_CARRITO_ACTUALIZADO, {
+        detail: {carrito: [...allProducts]}
+    }));
+}
 
+function sincronizarCarritoDesdeStorage() {
+    allProducts = obtenerCarritoDesdeLocalStorage();
+    renderizarCarrito();
+    actualizarTotal();
+    actualizarEstadoCarrito();
+}
+
+window.addEventListener(EVENTO_CARRITO_ACTUALIZADO, sincronizarCarritoDesdeStorage);
+window.addEventListener("storage", (event) => {
+    if (event.key === CLAVE_CARRITO) {
+        sincronizarCarritoDesdeStorage();
+    }
+});
 
 // Añadir contenedores al DOM
 carritoContainer.appendChild(productosContainer);
 carritoContainer.appendChild(carritoInfo);
 carritoContainer.appendChild(mensajeVacio);
-carritoIcono.parentElement.style.position = "relative"; // asegúrate que el padre tenga posición relativa
+carritoIcono.parentElement.style.position = "relative";
 carritoIcono.parentElement.appendChild(carritoContainer);
-
-
-
-// Guardar Datos en Local Storage
-function guardarCarritoEnLocalStorage() {
-    localStorage.setItem("carrito", JSON.stringify(allProducts));
-}
