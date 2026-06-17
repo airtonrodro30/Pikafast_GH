@@ -1,0 +1,41 @@
+/* --- FOOTER --- */
+.footer-pikafast { 
+    background-color: var(--bg-footer-top); 
+    padding: 3% 0; 
+}
+
+.footer-pikafast h6 {
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+
+.footer-pikafast a, .footer-pikafast p { 
+    color: var(--primary-brown); 
+    display: block; 
+    margin-bottom: 8px; 
+    font-size: 14px; 
+}
+
+.footer-bottom-bar { 
+    background-color: var(--bg-footer-bottom); 
+    padding: 1% 0; 
+    font-weight: 600; 
+}
+
+/* ARREGLO DE ICONOS SOCIALES PEQUEÑOS */
+.social-icons {
+    display: flex;
+    gap: 20px; /* Espacio entre Facebook, Instagram y TikTok */
+    align-items: center;
+}
+
+.social-icons i {
+    font-size: 1.6rem;
+    color: var(--primary-brown);
+    -webkit-text-stroke: 1px var(--primary-brown);
+    transition: opacity 0.2s;
+}
+
+.social-icons i:hover {
+    opacity: 0.7;
+}

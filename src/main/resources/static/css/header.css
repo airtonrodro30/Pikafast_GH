@@ -1,34 +1,5 @@
-:root {
-    --primary-yellow: #F8BC73;
-    --primary-brown: #682D03;
-    --bg-header: #FFF8EF;
-    --bg-footer-top: #F0CB7D;
-    --bg-footer-bottom: #F0BB47;
-    --white: #FFFFFF;
-}
-
-body {
-    font-family: "SF Pro", sans-serif;
-    margin: 0;
-    color: var(--primary-brown);
-    background-color: var(--white);
-    overflow-x: hidden;
-}
-
-/* --- RESET Y UTILIDADES --- */
-a, a:hover {
-    text-decoration: none !important;
-    color: inherit;
-}
-
-/* --- ICONOS BOOTSTRAP PERSONALIZADOS --- */
-.bi-custom {
-    color: var(--primary-brown) !important;
-    -webkit-text-stroke: 1.2px var(--primary-brown);
-    font-size: 1.8rem;
-    display: inline-flex;
-    align-items: center;
-}
+@import url('./base.css');
+@import url('./carrito-dropdown.css');
 
 /* --- HEADER STICKY --- */
 .header-wrapper {
@@ -130,46 +101,4 @@ a, a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-/* --- FOOTER --- */
-.footer-pikafast { 
-    background-color: var(--bg-footer-top); 
-    padding: 3% 0; 
-}
-
-.footer-pikafast h6 {
-    font-weight: 800;
-    margin-bottom: 15px;
-}
-
-.footer-pikafast a, .footer-pikafast p { 
-    color: var(--primary-brown); 
-    display: block; 
-    margin-bottom: 8px; 
-    font-size: 14px; 
-}
-
-.footer-bottom-bar { 
-    background-color: var(--bg-footer-bottom); 
-    padding: 1% 0; 
-    font-weight: 600; 
-}
-
-/* ARREGLO DE ICONOS SOCIALES PEQUEÑOS */
-.social-icons {
-    display: flex;
-    gap: 20px; /* Espacio entre Facebook, Instagram y TikTok */
-    align-items: center;
-}
-
-.social-icons i {
-    font-size: 1.6rem;
-    color: var(--primary-brown);
-    -webkit-text-stroke: 1px var(--primary-brown);
-    transition: opacity 0.2s;
-}
-
-.social-icons i:hover {
-    opacity: 0.7;
 }

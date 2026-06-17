@@ -1,0 +1,73 @@
+<aside th:fragment="sidebarFragment" class="admin-sidebar">
+    <div class="admin-brand">
+        <img th:src="@{/assets/img/logo.png}" src="assets/img/logo.png" alt="Pikafast">
+        <h2>Pikafast Admin</h2>
+    </div>
+
+    <div class="admin-menu-title">Opciones</div>
+    <nav class="admin-nav">
+        <a th:href="@{/dashboard}" class="admin-nav-link" 
+           th:classappend="${activeMenu == 'dashboard'} ? ' active' : ''">
+            <i class="bi bi-speedometer2"></i>
+            <span>Dashboard</span>
+        </a>
+        <a th:href="@{/dashboard/usuarios}" class="admin-nav-link"
+           th:classappend="${activeMenu == 'usuarios'} ? ' active' : ''">
+            <i class="bi bi-people"></i>
+            <span>Usuarios</span>
+        </a>
+        <a th:href="@{/dashboard/productos}" class="admin-nav-link"
+           th:classappend="${activeMenu == 'productos'} ? ' active' : ''">
+            <i class="bi bi-bag"></i>
+            <span>Productos</span>
+        </a>
+        <a th:href="@{/dashboard/pedidos}" class="admin-nav-link"
+           th:classappend="${activeMenu == 'pedidos'} ? ' active' : ''">
+            <i class="bi bi-receipt"></i>
+            <span>Pedidos</span>
+        </a>
+        <a th:href="@{/dashboard/categorias}" class="admin-nav-link"
+           th:classappend="${activeMenu == 'categorias'} ? ' active' : ''">
+            <i class="bi bi-tags"></i>
+            <span>Categorías</span>
+        </a>
+        <a th:href="@{/dashboard/inventario}" class="admin-nav-link"
+           th:classappend="${activeMenu == 'inventario'} ? ' active' : ''">
+            <i class="bi bi-box-seam"></i>
+            <span>Inventario</span>
+        </a>
+        <a th:href="@{/}" class="admin-nav-link mt-2">
+            <i class="bi bi-box-arrow-right"></i>
+            <span>Salir</span>
+        </a>
+    </nav>
+
+    <!-- Imagen de Perfil -->
+    <div class="dropup-center dropup mt-auto">
+        <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
+           data-bs-toggle="dropdown"
+           aria-expanded="false">
+
+            <img src="https://github.com/shadcn.png"
+                 alt="Avatar"
+                 width="32"
+                 height="32"
+                 class="rounded-circle me-2">
+
+            <strong th:text="${usuarioActual.nombre}">Usuario</strong>
+        </a>
+
+        <ul class="dropdown-menu text-small shadow">
+            <li><a class="dropdown-item" href="#">Perfil</a></li>
+            <li><a class="dropdown-item" href="#">Configuración</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+                <form th:action="@{/logout}" method="post">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    <button class="dropdown-item py-2 fw-bold text-center bg-light text-danger" type="submit">Cerrar sesión</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</aside>
+

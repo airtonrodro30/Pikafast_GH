@@ -1,0 +1,88 @@
+<header th:fragment="headerFragment"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+        class="header-wrapper">
+    <div class="container-fluid px-0 h-100">
+        <div class="row w-100 align-items-center g-0 h-100">
+
+            <div class="col-4 d-none d-lg-flex align-items-center ps-5">
+                <nav>
+                    <a th:href="@{/}" class="nav-link-custom">Inicio</a>
+                    <a th:href="@{/productos}" class="nav-link-custom">Productos</a>
+                    <a th:href="@{/}" class="nav-link-custom">Nosotros</a>
+                </nav>
+            </div>
+
+            <div class="col-4 d-flex justify-content-center h-100">
+                <a th:href="@{/}" class="logo-container">
+                    <img th:src="@{/assets/img/logoHeader.png}" alt="Pikafast">
+                </a>
+            </div>
+
+            <div class="col-8 col-lg-4 d-flex align-items-center justify-content-end h-100 pe-5">
+
+                <div class="order-date-outer-container me-4">
+                    <div class="date-badge-inner">
+                        <span class="date-label">Realizando un pedido para el:</span>
+                        <div class="date-value">
+                            <span id="display-date">05/09/2025</span>
+                            <i class="bi bi-calendar3"></i>
+                        </div>
+                        <input type="date" class="input-datepicker" id="date-picker">
+                    </div>
+                </div>
+
+                <!-- CARRITO -->
+                <div class="header-icon me-4">
+                    <div id="cart-icon" style="cursor:pointer;">
+                        <i class="bi bi-bag bi-custom"></i>
+                    </div>
+                    <div id="cart-container">
+                        <!-- Contenido del carrito -->
+
+                    </div>
+                </div>
+
+                <!-- USUARIO -->
+                <div id="user-menu-container">
+                    <div class="dropdown">
+                        <div class="user-icon-bg" data-bs-toggle="dropdown" style="cursor:pointer;">
+                            <i class="bi bi-person bi-custom"></i>
+                        </div>
+                        <ul class="dropdown-menu dropdown-menu-end shadow border-0" style="border-radius: 15px; overflow: hidden; margin-top: 10px;">
+                            <!-- Se muestra si el usuario esta autenticado -->
+                            <div sec:authorize="isAuthenticated()">
+                                <li>
+                                    <a class="dropdown-item py-2 fw-bold text-center" 
+                                       th:href="@{/perfil}">Perfil</a>
+                                </li>
+                                <li sec:authorize="hasRole('ADMIN')">
+                                    <a class="dropdown-item py-2 fw-bold text-center" 
+                                       th:href="@{/dashboard}">Dashboard</a>
+                                </li>
+                                <li><hr class="dropdown-divider m-0"></li>
+                                <li>
+                                    <form th:action="@{/logout}" method="post">
+                                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                        <button class="dropdown-item py-2 fw-bold text-center bg-light text-danger" type="submit">🔓 Cerrar Sesión</button>
+                                    </form>
+                                </li>
+                            </div>
+
+                            <!-- Si no esta autenticado -->
+                            <li sec:authorize="isAnonymous()">
+                                <a class="dropdown-item py-2 fw-bold text-center bg-light" th:href="@{/login}">
+                                    🔑 INCIAR SESIÓN
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Script de Carrito -->
+    <script th:src="@{/js/carrito-dropdown.js}"></script>
+</header>

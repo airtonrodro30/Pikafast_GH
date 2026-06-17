@@ -1,5 +1,7 @@
-/* --- ESTILOS COMPARTIDOS: LOGIN Y REGISTRO --- */
+@import url('./header.css');
+@import url('./footer.css');
 
+/* --- ESTILOS COMPARTIDOS: LOGIN Y REGISTRO --- */
 .login-title {
     font-size: 3rem; 
     font-weight: 900;

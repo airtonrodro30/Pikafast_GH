@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pikafast - Carrito de Compras</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+<link rel="stylesheet" href="assets/css/style.css" th:href="@{/css/style.css}">
+<link rel="stylesheet" href="assets/css/credenciales.css" th:href="@{/css/credenciales.css}">
+<link rel="stylesheet" href="assets/css/perfil.css" th:href="@{/css/perfil.css}">
+</head>
+<body>
+
+    <header class="header-wrapper">
+        <div class="container-fluid px-0 h-100">
+            <div class="row w-100 align-items-center g-0 h-100">
+                
+                <div class="col-4 d-none d-lg-flex align-items-center ps-5">
+                    <nav>
+                        <a href="#" class="nav-link-custom">Bocaditos Salados</a>
+                        <a href="#" class="nav-link-custom">Dulces</a>
+                        <a href="#" class="nav-link-custom">Mini Boxes</a>
+                    </nav>
+                </div>
+
+                <div class="col-4 d-flex justify-content-center h-100">
+                    <a th:href="@{/}" class="logo-container">
+                        <img src="assets/img/logoHeader.png" alt="Pikafast">
+                    </a>
+                </div>
+
+                <div class="col-8 col-lg-4 d-flex align-items-center justify-content-end h-100 pe-5">
+                    
+                    <div class="order-date-outer-container me-4">
+                        <div class="date-badge-inner">
+                            <span class="date-label">Realizando un pedido para el:</span>
+                            <div class="date-value">
+                                <span id="display-date">05/09/2025</span>
+                                <i class="bi bi-calendar3"></i>
+                            </div>
+                            <input type="date" class="input-datepicker" id="date-picker">
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="me-4 d-flex align-items-center">
+                        <i class="bi bi-bag bi-custom"></i>
+                    </a>
+                    
+                    <div id="user-menu-container"></div>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <main class="container my-5 py-5">
+        <!-- Título -->
+        <div class="d-flex align-items-center mb-5">
+            <i class="bi bi-arrow-left me-3" style="font-size: 1.5rem; cursor: pointer;"></i>
+            <h1 class="catalog-title mb-0">Hola, <span class="text-brown">Usuario</span></h1>
+        </div>
+
+        <!-- Campos de Perfil -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-6">
+                <div class="input-group-pikafast">
+                    <i class="bi bi-person"></i>
+                    <input type="text" class="form-control" value="Usuario De Prueba 2" readonly>
+                    <i class="bi bi-pencil-square edit-icon"></i>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group-pikafast">
+                    <i class="bi bi-envelope"></i>
+                    <input type="email" class="form-control" value="usuarioprueba@correo.com" readonly>
+                    <i class="bi bi-pencil-square edit-icon"></i>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group-pikafast">
+                    <i class="bi bi-telephone"></i>
+                    <input type="text" class="form-control" value="999955555" readonly>
+                    <i class="bi bi-pencil-square edit-icon"></i>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group-pikafast">
+                    <i class="bi bi-lock"></i>
+                    <input type="password" class="form-control" value="********" readonly>
+                    <i class="bi bi-eye edit-icon"></i>
+                </div>
+                <div class="text-end mt-2">
+                    <a href="#" class="small-link">¿Desea cambiar la contraseña?</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección Pedidos -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="section-title">Tus Pedidos</h2>
+            <a href="#" class="btn-ver-todos">Ver Todos</a>
+        </div>
+
+        <div class="row g-4">
+            <!-- Pedido Pendiente -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card-pedido">
+                    <div class="badge-estado bg-pendiente">Pendiente</div>
+                    <div class="pedido-info">
+                        <p><i class="bi bi-truck"></i> Envío: Sí</p>
+                        <p><i class="bi bi-geo-alt"></i> Ubicación: Av. La Guardia...</p>
+                        <p><i class="bi bi-currency-dollar"></i> Monto: S/. 41.40</p>
+                        <p><i class="bi bi-credit-card"></i> Método Pago: Tarjeta Crédito</p>
+                    </div>
+                    <a href="#" class="link-detalle">Ver Detalles</a>
+                </div>
+            </div>
+            <!-- Pedido Entregado -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card-pedido">
+                    <div class="badge-estado bg-entregado">Entregado</div>
+                    <div class="pedido-info">
+                        <p><i class="bi bi-truck"></i> Envío: No</p>
+                        <p><i class="bi bi-geo-alt"></i> Ubicación: Av. La Guardia...</p>
+                        <p><i class="bi bi-currency-dollar"></i> Monto: S/. 23.00</p>
+                        <p><i class="bi bi-credit-card"></i> Método Pago: Tarjeta Crédito</p>
+                    </div>
+                    <a href="#" class="link-detalle">Ver Detalles</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer-pikafast">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 mb-4"><img src="assets/img/logo.png" width="140"></div>
+                <div class="col-md-2">
+                    <h6>Sobre Nosotros</h6>
+                    <a href="#">Historia</a><a href="#">Misión</a><a href="#">Visión</a>
+                </div>
+                <div class="col-md-4">
+                    <h6>Contacto</h6>
+                    <p><i class="bi bi-telephone-fill me-2"></i> 999 999 886</p>
+                    <p><i class="bi bi-geo-alt-fill me-2"></i> Av. San Bartolo 137 Huancayo</p>
+                </div>
+                <div class="col-md-3">
+                    <h6>Preguntas Frecuentes</h6>
+                    <a href="#">¿Cómo pedir?</a><a href="#">Política de Devoluciones</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="footer-bottom-bar text-center">
+        <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+            <span>CopyRight 2025 PIKAFAST all rights reserved</span>
+            <div class="social-icons">
+                <i class="bi bi-instagram"></i><i class="bi bi-facebook"></i><i class="bi bi-tiktok"></i>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

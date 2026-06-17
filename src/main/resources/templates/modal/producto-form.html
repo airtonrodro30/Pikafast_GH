@@ -1,0 +1,93 @@
+<div th:fragment="productoFormModal">
+    <div class="modal fade" id="productoModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content admin-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title">Crear / Editar producto</h5>
+                    <a th:href="@{/dashboard/productos}"
+                       class="btn-close"
+                       aria-label="Cerrar">
+                    </a>
+                </div>
+
+                <div class="modal-body">
+                    <form th:action="@{/dashboard/productos/guardar}"
+                          th:object="${producto}"
+                          method="post"
+                          enctype="multipart/form-data">
+
+                        <input type="hidden" th:field="*{idProducto}">
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Título</label>
+                                <input type="text" 
+                                       class="form-control admin-form-control"
+                                       th:field="*{nombre}"
+                                       placeholder="Nombre del producto">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Precio</label>
+                                <input type="number"
+                                       class="form-control admin-form-control"
+                                       th:field="*{precio}"
+                                       placeholder="0.00"
+                                       step="0.01"
+                                       min="0">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Descripción</label>
+                                <textarea class="form-control admin-form-control"
+                                          th:field="*{descripcion}"
+                                          placeholder="Descripción del producto"
+                                          rows="4" >
+                                </textarea>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Foto</label>
+                                <input type="file" 
+                                       class="form-control admin-form-control"
+                                       name="imagenProducto"
+                                       accept="image/*">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Categoría</label>
+                                <select class="form-select admin-form-select"
+                                        th:field="*{categoria.idCategoria}">
+                                    <option
+                                        th:each="categoria : ${categorias}"
+                                        th:value="${categoria.idCategoria}"
+                                        th:text="${categoria.nombre}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Estado</label>
+                                <select class="form-select admin-form-select"
+                                        th:field="*{disponible}">
+                                    <option value="true">Disponible</option>
+                                    <option value="false">No Disponible</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <a th:href="@{/dashboard/productos}"
+                               class="btn btn-secondary">
+                                Cancelar
+                            </a>
+                            <button type="submit" class="btn admin-btn">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS Modal -->
+    <script th:if="${abrirModal}">
+        document.addEventListener("DOMContentLoaded", function () {
+            const modal = new bootstrap.Modal(document.getElementById("productoModal"));
+            modal.show();
+        });
+    </script>
+</div>

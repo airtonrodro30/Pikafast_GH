@@ -1,0 +1,114 @@
+/* --- Estilos Generales y Variables --- */
+:root {
+    --primary-brown: #5D4037;
+    --bg-light: #FFF8E1;
+}
+
+/* --- Grupos de Input (Perfil) --- */
+.input-group-pikafast {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--primary-brown);
+    border-radius: 12px;
+    padding: 10px 15px;
+    background: #fff;
+    margin-bottom: 15px;
+}
+
+.input-group-pikafast i {
+    color: var(--primary-brown);
+    font-size: 1.2rem;
+    margin-right: 12px;
+}
+
+.input-group-pikafast input {
+    border: none;
+    background: transparent;
+    padding: 0;
+    color: var(--primary-brown);
+    font-weight: 500;
+}
+
+.input-group-pikafast input:focus {
+    box-shadow: none;
+}
+
+.edit-icon {
+    cursor: pointer;
+    color: var(--primary-brown);
+    font-size: 1.2rem;
+    margin-left: auto;
+}
+
+/* --- Botón Ver Todos --- */
+.btn-ver-todos {
+    background-color: var(--primary-brown);
+    color: white;
+    padding: 8px 25px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.btn-ver-todos:hover {
+    color: white;
+    background-color: #4a342c;
+}
+
+/* --- Tarjeta de Pedido --- */
+.card-pedido {
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    background: #fff;
+    height: 100%;
+}
+
+.pedido-info p {
+    margin-bottom: 8px;
+    color: var(--primary-brown);
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+}
+
+.pedido-info i {
+    margin-right: 10px;
+    width: 20px;
+}
+
+/* --- Badges de Estado --- */
+.badge-estado {
+    padding: 6px 15px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 700;
+    font-size: 0.85rem;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.bg-pendiente { background-color: #F0AD4E; } /* Amarillo */
+.bg-entregado { background-color: #5CB85C; } /* Verde */
+.bg-cancelado { background-color: #D9534F; } /* Rojo */
+
+/* --- Enlace Detalles (Azul) --- */
+.link-detalle {
+    color: #0d6efd; /* Azul Bootstrap */
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: block;
+    margin-top: 15px;
+}
+
+.link-detalle:hover {
+    color: #0a58ca;
+}
+
+/* --- Texto Extra --- */
+.small-link {
+    color: #0d6efd;
+    font-size: 0.85rem;
+}

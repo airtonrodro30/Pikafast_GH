@@ -1,0 +1,67 @@
+.card-historial {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+    transition: transform 0.2s;
+}
+
+.card-historial:hover {
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+.historial-header {
+    padding: 10px 20px;
+    color: white;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Colores de estado */
+.bg-pendiente { background-color: #f39c12; }
+.bg-entregado { background-color: #27ae60; }
+.bg-cancelado { background-color: #e74c3c; }
+
+.historial-body {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.data-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.data-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #4a4a4a;
+    font-size: 0.9rem;
+}
+
+.data-item i {
+    color: #888;
+    width: 18px;
+    text-align: center;
+}
+
+.link-detalle {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    align-self: flex-end;
+}
+
+.link-detalle:hover { text-decoration: underline; }

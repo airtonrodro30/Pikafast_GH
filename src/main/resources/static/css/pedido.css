@@ -1,0 +1,56 @@
+/* Contenedor principal */
+.detalle-container {
+    max-width: 900px;
+    margin: auto;
+}
+
+/* Header del Detalle */
+.detalle-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.btn-cancelar {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+/* Tarjeta de información */
+.card-info {
+    background: #fff;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    margin-bottom: 30px;
+    border: 1px solid #eee;
+}
+
+/* Lista de productos */
+.producto-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.producto-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Panel de Precios (lado derecho) */
+.panel-precios {
+    background: #ffeccf; /* Color crema suave */
+    padding: 20px;
+    border-radius: 12px;
+    height: fit-content;
+}
