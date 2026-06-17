@@ -1,68 +1,61 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Pikafast - Carrito de Compras</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pikafast - Carrito de Compras</title>
 
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-        <link rel="stylesheet" th:href="@{./css/style.css}" >
-        <link rel="stylesheet" th:href="@{./css/credenciales.css}" >
-        <link rel="stylesheet" th:href="@{./css/carrito.css}" >
-    </head>
-    <body>
-        <!-- Seccion Header -->
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/carrito.css}">
+</head>
+<body>
+    <!-- Seccion Header -->
     <th:block th:replace="~{fragments/header :: headerFragment}"></th:block>
 
     <main class="container my-2 py-2">
         <div class="row g-4 align-items-start">
             <div class="col-lg-8">
                 <div class="d-flex align-items-center gap-3 mb-4">
-                    <i class="bi bi-arrow-left catalog-back-icon"></i>
+                    <a th:href="@{/productos}" class="text-decoration-none">
+                        <i class="bi bi-arrow-left-circle-fill catalog-back-icon"></i>
+                    </a>
                     <h1 class="catalog-title mb-0">Carrito de Compras</h1>
                 </div>
 
-                
-                <div class="catalog-item">
-                    <img src="assets/img/alfajores.png" alt="Alfajores">
-                    <div class="catalog-item-body">
-                        <div class="catalog-item-top">
-                            <h2>Alfajores</h2>
-                            <i class="bi bi-trash3 catalog-trash"></i>
-                        </div>
-                        <p>Deliciosos alfajores artesanales, elaborados con masa suave y delicada, rellenos de manjar blanco y espolvoreados con azúcar.</p>
-                        <div class="catalog-item-bottom">
-                            <span class="catalog-price">S/. 20.00</span>
-                            <div class="catalog-qty">
-                                <button type="button">-</button>
-                                <input type="text" value="3" readonly>
-                                <button type="button">+</button>
-                            </div>
-                        </div>
-                    </div>
+                <div id="carrito-vacio" class="empty-cart-state d-none">
+                    <i class="bi bi-bag-x"></i>
+                    <p class="mb-0">Tu carrito está vacío.</p>
                 </div>
 
+                <div id="carrito-lista" class="cart-list"></div>
             </div>
 
             <div class="col-lg-4">
                 <div class="order-summary">
-                    <h3>Resumen del Pedido:</h3>
+                    <h3>Resumen del Pedido</h3>
                     <div class="summary-line">
                         <span>Total de artículos:</span>
-                        <span>6</span>
+                        <span id="resumen-cantidad">0</span>
                     </div>
                     <div class="summary-line">
-                        <span>Monto Total:</span>
-                        <span>S/. 41.49</span>
+                        <span>Subtotal:</span>
+                        <span id="resumen-subtotal">S/. 0.00</span>
                     </div>
                     <hr>
                     <div class="summary-line summary-total">
-                        <span>Total de productos:</span>
-                        <span>S/. 41.49</span>
+                        <span>Total general:</span>
+                        <span id="resumen-total">S/. 0.00</span>
                     </div>
-                    <button type="button" class="pay-button">Ir a Pagar</button>
+                    <button type="button" class="pay-button" disabled>Ir a Pagar</button>
                 </div>
             </div>
         </div>
@@ -71,8 +64,9 @@
     <!-- Seccion Footer -->
     <th:block th:replace="~{fragments/footer :: footerFragment}"></th:block>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script th:src="@{/js/main.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+            crossorigin="anonymous"></script>
+    <script th:src="@{/js/carrito.js}"></script>
 </body>
 </html>

@@ -15,14 +15,31 @@
   gap: 18px;
   align-items: flex-start;
   margin-bottom: 32px;
+  padding: 18px;
+  border: 1px solid #ead6b6;
+  border-radius: 18px;
+  background-color: #fff9f1;
 }
 
-.catalog-item img {
+.catalog-item-image,
+.catalog-item-placeholder {
   width: 150px;
   height: 150px;
-  border-radius: 20px;
-  object-fit: cover;
   flex-shrink: 0;
+  border-radius: 20px;
+}
+
+.catalog-item-image {
+  object-fit: cover;
+}
+
+.catalog-item-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f2e3cb;
+  color: var(--primary-brown);
+  font-size: 2.25rem;
 }
 
 .catalog-item-body {
@@ -47,13 +64,6 @@
   font-size: 1.4rem;
   color: #b41d1d;
   cursor: pointer;
-}
-
-.catalog-item-body p {
-  margin: 6px 0 12px;
-  max-width: 390px;
-  line-height: 1.05;
-  font-size: 0.95rem;
 }
 
 .catalog-item-bottom {
@@ -95,6 +105,14 @@
   outline: none;
   font-size: 0.95rem;
   background: transparent;
+}
+
+.catalog-subtotal {
+  min-width: 120px;
+  text-align: right;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary-brown);
 }
 
 .order-summary {
@@ -139,8 +157,32 @@
   transition: 0.2s;
 }
 
+.pay-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
 .pay-button:hover {
   transform: scale(1.02);
+}
+
+.empty-cart-state {
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border: 2px dashed #dfc29a;
+  border-radius: 20px;
+  background-color: #fff9f1;
+  color: var(--primary-brown);
+  text-align: center;
+  padding: 24px;
+}
+
+.empty-cart-state i {
+  font-size: 3rem;
 }
 
 @media (max-width: 991px) {
@@ -148,17 +190,19 @@
     flex-direction: column;
   }
 
-  .catalog-item img {
+  .catalog-item-image,
+  .catalog-item-placeholder {
     width: 100%;
     height: 240px;
-  }
-
-  .catalog-item-body p {
-    max-width: 100%;
   }
 
   .catalog-item-bottom {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .catalog-subtotal {
+    min-width: auto;
+    text-align: left;
   }
 }
