@@ -38,7 +38,7 @@ public class ConfigSeguridad {
                 .userDetailsService(userDetailsService) // <-- Enlaza al userDetailsService
                 .authorizeHttpRequests(auth -> auth
                 // Permite que cualquiera entre al registro y login sin autenticarse
-                .requestMatchers( "/","/productos","/productos/**").permitAll()
+                .requestMatchers( "/","/productos","/productos/**", "/carrito", "/pago").permitAll()
                 .requestMatchers("/assets/**", "/css/**", "/js/**").permitAll()
                 .requestMatchers("/login", "/registrar", "/uploaded-images/**").permitAll()
                 .requestMatchers("/dashboard/**", "/admin/**").hasAnyRole("ADMIN")

@@ -61,7 +61,9 @@
                                 <p class="product-description" th:text="${producto.descripcion}"></p>
                                 <div class="product-footer-meta">
                                     <span class="product-price" th:text="'S/.' + ${producto.precio}"></span>
-                                    <button class="btn-add-cart" title="Agregar al carrito">
+                                    <button class="btn-add-cart"
+                                            title="Agregar al carrito"
+                                            th:attr="data-descripcion=${producto.descripcion}">
                                         <i class="bi bi-plus-lg"></i>
                                     </button>
                                 </div>

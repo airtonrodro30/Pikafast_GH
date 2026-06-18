@@ -19,12 +19,11 @@
                         <input type="hidden" th:field="*{idUsuario}">
 
                         <div class="row g-3">
-
-                            <div class="col-md-6">
-                                <label>Nombre completo</label>
-                                <input type="text"
-                                       class="form-control admin-form-control"
-                                       th:field="*{nombre}">
+                            <div class="col-12">
+                                <div class="alert alert-light border mb-0">
+                                    Los datos personales se gestionan desde la entidad asociada
+                                    (`Empleado` o `Cliente`). Aquí solo se administra la cuenta de acceso.
+                                </div>
                             </div>
 
                             <div class="col-md-6">
@@ -32,13 +31,6 @@
                                 <input type="email"
                                        class="form-control admin-form-control"
                                        th:field="*{email}">
-                            </div>
-
-                            <div class="col-md-6">
-                                <label>Teléfono</label>
-                                <input type="text"
-                                       class="form-control admin-form-control"
-                                       th:field="*{telefono}">
                             </div>
 
                             <div class="col-md-6">

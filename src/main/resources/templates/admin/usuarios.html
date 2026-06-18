@@ -56,7 +56,7 @@
                     <tr th:each="usuario : ${usuarios}">
                         <td>
                             <i class="bi bi-person-circle me-2"></i>
-                            <span th:text="${usuario.nombre}">Nombre usuario</span>
+                            <span th:text="${empleadosPorUsuarioId != null and empleadosPorUsuarioId[usuario.idUsuario] != null and empleadosPorUsuarioId[usuario.idUsuario].nombres != null and !#strings.isEmpty(empleadosPorUsuarioId[usuario.idUsuario].nombres) ? empleadosPorUsuarioId[usuario.idUsuario].nombres : 'Usuario'}">Usuario</span>
                         </td>
 
                         <td th:text="${usuario.email}">email@ejemplo.com</td>

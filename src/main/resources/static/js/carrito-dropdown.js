@@ -150,12 +150,22 @@ document.addEventListener("DOMContentLoaded", () => {
             const match = precioTexto.match(/[\d]+(?:\.\d+)?/);
             const precioNumero = match ? parseFloat(match[0]) : 0;
             const imagen = card.querySelector("img").getAttribute("src");
+            const descripcion = boton.dataset.descripcion?.trim() || "";
 
             const index = allProducts.findIndex(p => p.titulo === nombre);
             if (index >= 0) {
                 allProducts[index].cantidad++;
+                if (!allProducts[index].descripcion && descripcion) {
+                    allProducts[index].descripcion = descripcion;
+                }
             } else {
-                allProducts.push({titulo: nombre, precio: precioNumero, imagen, cantidad: 1});
+                allProducts.push({
+                    titulo: nombre,
+                    precio: precioNumero,
+                    imagen,
+                    descripcion,
+                    cantidad: 1
+                });
             }
 
             renderizarCarrito();

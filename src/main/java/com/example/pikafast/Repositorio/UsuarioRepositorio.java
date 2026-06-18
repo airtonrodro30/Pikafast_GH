@@ -9,7 +9,6 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, Integer>{
     
     Usuario findByEmail(String email); //SELECT * FROM usuario WHERE email = ?
     
-    Usuario findByNombre(String Nombre); //SELECT * FROM usuario WHERE nombre = ? 
     
     long countByRol(Rol rol); //SELECT COUNT(*) FROM usuario WHERE rol = "rol"
 }

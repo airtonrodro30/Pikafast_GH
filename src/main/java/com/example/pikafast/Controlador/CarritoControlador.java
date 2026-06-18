@@ -10,4 +10,9 @@ public class CarritoControlador {
     public String mostrarCarritoDeCompras(){
         return "carrito";
     }
+
+    @GetMapping("/pago")
+    public String mostrarPago() {
+        return "pago";
+    }
 }
