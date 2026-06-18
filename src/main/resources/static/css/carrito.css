@@ -74,8 +74,8 @@
 }
 
 .catalog-price {
-  font-size: 1.5rem;
-  font-weight: 800;
+  font-size: 1.4rem;
+  font-weight: 700;
   color: var(--primary-brown);
 }
 
@@ -109,10 +109,17 @@
 
 .catalog-subtotal {
   min-width: 120px;
-  text-align: right;
   font-size: 1rem;
   font-weight: 700;
   color: var(--primary-brown);
+}
+
+.catalog-description {
+  margin: 8px 0 0;
+  max-width: 540px;
+  font-size: 0.95rem;
+  line-height: 1.35;
+  color: #5f4936;
 }
 
 .order-summary {

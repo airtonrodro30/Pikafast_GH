@@ -18,13 +18,9 @@ public class Usuario {
     @Column(name = "id_usuario")
     private Integer idUsuario;
 
-    private String nombre;
-
     private String email;
 
     private String contrasenia;
-
-    private String telefono;
 
     @Enumerated(EnumType.STRING)
     private Rol rol;
@@ -38,14 +34,6 @@ public class Usuario {
 
     public void setIdUsuario(Integer idUsuario) {
         this.idUsuario = idUsuario;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
     }
 
     public String getEmail() {
@@ -62,14 +50,6 @@ public class Usuario {
 
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
     }
 
     public Rol getRol() {

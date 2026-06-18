@@ -1,10 +1,10 @@
 package com.example.pikafast.Controlador;
 
-//import com.example.WebProyect.DTO.RegistroDTO;
-//import com.example.WebProyect.Entidad.Cliente;
-//import com.example.WebProyect.Servicio.ClienteServicio;
+import com.example.pikafast.DTO.RegistroClienteDTO;
+import com.example.pikafast.Entidad.Cliente;
 import com.example.pikafast.Entidad.Usuario;
 import com.example.pikafast.Enums.Rol;
+import com.example.pikafast.Servicio.ClienteServicio;
 import com.example.pikafast.Servicio.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,26 +23,49 @@ public class registrarControlador {
     @Autowired
     UsuarioServicio usuarioServicio;
 
+    @Autowired
+    ClienteServicio clienteServicio;
+
     @GetMapping("/registrar")
     public String mostrarFormularioRegistro(Model model) {
-        model.addAttribute("usuario", new Usuario());
+        model.addAttribute("registroCliente", new RegistroClienteDTO());
         return "registrar";
     }
 
     @PostMapping("/registrar")
-    public String registrarUsuario(@ModelAttribute("usuario") Usuario nuevoUsuario) {
-        /* Registrar Usuario */
+    public String registrarUsuario(@ModelAttribute("registroCliente") RegistroClienteDTO registroCliente, Model model) {
+        if (usuarioServicio.findByEmail(registroCliente.getEmail()) != null) {
+            model.addAttribute("errorRegistro", "El correo ingresado ya está registrado.");
+            return "registrar";
+        }
 
-        // 1. Encriptamos la contraseña que YA viene dentro de nuevoUsuario
-        String contraseniaEncriptada = passwordEncoder.encode(nuevoUsuario.getContrasenia());
-        nuevoUsuario.setContrasenia(contraseniaEncriptada);
+        if (clienteServicio.findByDni(registroCliente.getDni()).isPresent()) {
+            model.addAttribute("errorRegistro", "El DNI ingresado ya está registrado.");
+            return "registrar";
+        }
 
-        // 2. Asignamos los valores por defecto que no vienen del formulario
+        if (registroCliente.getContrasenia() == null
+                || !registroCliente.getContrasenia().equals(registroCliente.getConfirmarContrasenia())) {
+            model.addAttribute("errorRegistro", "La contraseña y su confirmación no coinciden.");
+            return "registrar";
+        }
+
+        Usuario nuevoUsuario = new Usuario();
+        nuevoUsuario.setEmail(registroCliente.getEmail());
+        nuevoUsuario.setContrasenia(passwordEncoder.encode(registroCliente.getContrasenia()));
         nuevoUsuario.setRol(Rol.CLIENTE);
         nuevoUsuario.setActivo(true);
 
-        // 3. Guardamos el objeto que recibimos y modificamos
         Usuario usuarioGuardado = usuarioServicio.save(nuevoUsuario);
+
+        Cliente nuevoCliente = new Cliente();
+        nuevoCliente.setNombres(registroCliente.getNombres());
+        nuevoCliente.setApellidos(registroCliente.getApellidos());
+        nuevoCliente.setDni(registroCliente.getDni());
+        nuevoCliente.setTelefono(registroCliente.getTelefono());
+        nuevoCliente.setUsuario(usuarioGuardado);
+
+        clienteServicio.save(nuevoCliente);
 
         return "redirect:/login";
     }
