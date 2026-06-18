@@ -55,66 +55,36 @@
                     <th>Acciones</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td><strong>#ORD-001</strong></td>
-                    <td>María González</td>
-                    <td>Peti Panes x2, Alfajores x1</td>
-                    <td><strong>S/. 16.50</strong></td>
-                    <td>20/05/2026</td>
-                    <td><span class="badge badge-preparacion">En preparación</span></td>
-                    <td>
-                        <button class="btn-edit" data-bs-toggle="modal" data-bs-target="#pedidoModal">
-                            <i class="bi bi-pencil-square me-1"></i>Editar
-                        </button>
-                        <button class="btn-view">
-                            <i class="bi bi-eye me-1"></i>Ver
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>#ORD-002</strong></td>
-                    <td>Carlos Ramírez</td>
-                    <td>Alitas Bouchet x3, Mini Box x1</td>
-                    <td><strong>S/. 62.97</strong></td>
-                    <td>20/05/2026</td>
-                    <td><span class="badge badge-entrega">En entrega</span></td>
-                    <td>
-                        <button class="btn-edit" data-bs-toggle="modal" data-bs-target="#pedidoModal">
-                            <i class="bi bi-pencil-square me-1"></i>Editar
-                        </button>
-                        <button class="btn-view">
-                            <i class="bi bi-eye me-1"></i>Ver
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>#ORD-003</strong></td>
-                    <td>Ana Torres</td>
-                    <td>Dulces variados x5</td>
-                    <td><strong>S/. 45.00</strong></td>
-                    <td>19/05/2026</td>
-                    <td><span class="badge badge-finalizado">Finalizado</span></td>
-                    <td>
-                        <button class="btn-view">
-                            <i class="bi bi-eye me-1"></i>Ver
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>#ORD-004</strong></td>
-                    <td>Juan Pérez</td>
-                    <td>Mini Box personalizada x2</td>
-                    <td><strong>S/. 80.00</strong></td>
-                    <td>19/05/2026</td>
-                    <td><span class="badge badge-cancelado">Cancelado</span></td>
-                    <td>
-                        <button class="btn-view">
-                            <i class="bi bi-eye me-1"></i>Ver
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
+<tbody>
+    <tr th:each="pedido : ${pedidos}">
+        
+        <td>
+            <strong th:text="'#ORD-' + ${pedido.idPedido}"></strong>
+        </td>
+
+        <td th:text="${pedido.cliente.nombres + ' ' + pedido.cliente.apellidos}"></td>
+
+        <td>Productos registrados</td>
+
+        <td>
+            <strong th:text="'S/. ' + ${pedido.precioTotal}"></strong>
+        </td>
+
+        <td th:text="${#temporals.format(pedido.fecha, 'dd/MM/yyyy HH:mm')}"></td>
+
+        <td>
+            <span th:text="${pedido.estadoPedido}"></span>
+        </td>
+
+        <td>
+            <a th:href="@{/dashboard/pedidos/ver/{id}(id=${pedido.idPedido})}"
+                    class="btn-view">
+            <i class="bi bi-eye me-1"></i>Ver
+                            </a>
+        </td>
+
+    </tr>
+</tbody>
         </table>
     </section>
 </main>

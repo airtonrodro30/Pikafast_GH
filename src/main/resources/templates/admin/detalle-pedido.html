@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Detalle del Pedido</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-4">
+
+    <h2 th:text="'Pedido #' + ${pedido.idPedido}"></h2>
+
+    <div class="card mt-3">
+        <div class="card-body">
+
+            <p>
+                <strong>Cliente:</strong>
+                <span th:text="${pedido.cliente.nombres + ' ' + pedido.cliente.apellidos}"></span>
+            </p>
+
+            <p>
+                <strong>Estado:</strong>
+                <span th:text="${pedido.estadoPedido}"></span>
+            </p>
+
+            <p>
+                <strong>Fecha:</strong>
+                <span th:text="${#temporals.format(pedido.fecha,'dd/MM/yyyy HH:mm')}"></span>
+            </p>
+
+            <p>
+                <strong>Total:</strong>
+                S/. <span th:text="${pedido.precioTotal}"></span>
+            </p>
+
+        </div>
+    </div>
+
+    <h4 class="mt-4">Productos</h4>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr th:each="detalle : ${detalles}">
+                <td th:text="${detalle.producto.nombre}"></td>
+                <td th:text="${detalle.cantidad}"></td>
+                <td th:text="${detalle.precioUnitario}"></td>
+                <td th:text="${detalle.subtotal}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="/dashboard/pedidos" class="btn btn-secondary">
+        Volver
+    </a>
+
+</div>
+
+</body>
+</html>
