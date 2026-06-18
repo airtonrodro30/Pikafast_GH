@@ -63,7 +63,7 @@
                                     <span class="product-price" th:text="'S/.' + ${producto.precio}"></span>
                                     <button class="btn-add-cart"
                                             title="Agregar al carrito"
-                                            th:attr="data-descripcion=${producto.descripcion}">
+                                            th:attr="data-descripcion=${producto.descripcion},data-id-producto=${producto.idProducto}">
                                         <i class="bi bi-plus-lg"></i>
                                     </button>
                                 </div>

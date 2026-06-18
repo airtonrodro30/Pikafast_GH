@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface UsuarioRepositorio extends JpaRepository<Usuario, Integer>{
     
     Usuario findByEmail(String email); //SELECT * FROM usuario WHERE email = ?
-    
-    
+
     long countByRol(Rol rol); //SELECT COUNT(*) FROM usuario WHERE rol = "rol"
 }

@@ -39,6 +39,7 @@ public class Pedido {
     @Enumerated(EnumType.STRING)
     private TipoEnvio tipoEnvio;
     
+    @Column(name="estado")
     @Enumerated(EnumType.STRING)
     private EstadoPedido estadoPedido;
     

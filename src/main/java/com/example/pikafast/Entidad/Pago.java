@@ -34,6 +34,7 @@ public class Pago {
     
     private BigDecimal monto;
     
+    @Column(name="estado")
     @Enumerated(EnumType.STRING)
     private EstadoPago estadoPago;
     

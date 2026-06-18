@@ -1,6 +1,7 @@
 (() => {
     const CLAVE_CARRITO = "carrito";
     const COSTO_ENVIO = 12;
+    const ENDPOINT_CONFIRMAR_COMPRA = "/api/compras/confirmar";
 
     const listaProductos = document.getElementById("pago-lista-productos");
     const carritoVacio = document.getElementById("pago-carrito-vacio");
@@ -9,6 +10,9 @@
     const envioElemento = document.getElementById("pago-envio");
     const totalElemento = document.getElementById("pago-total");
     const botonFinalizar = document.getElementById("btn-finalizar-compra");
+    const csrfToken = document.querySelector('meta[name="_csrf"]')?.getAttribute("content") || "";
+    const csrfHeader = document.querySelector('meta[name="_csrf_header"]')?.getAttribute("content") || "X-CSRF-TOKEN";
+    let compraEnProceso = false;
 
     function leerCarrito() {
         const carritoGuardado = localStorage.getItem(CLAVE_CARRITO);
@@ -92,16 +96,90 @@
         return metodoSeleccionado ? metodoSeleccionado.value : null;
     }
 
+    function construirPayloadCompra() {
+        const carrito = leerCarrito();
+
+        return {
+            metodoPago: obtenerMetodoSeleccionado(),
+            tipoEnvio: "DELIVERY",
+            items: carrito.map((producto) => ({
+                idProducto: producto.idProducto,
+                cantidad: producto.cantidad
+            }))
+        };
+    }
+
+    function validarPayload(payload) {
+        if (!payload.metodoPago) {
+            throw new Error("Debes seleccionar un método de pago.");
+        }
+
+        if (!Array.isArray(payload.items) || payload.items.length === 0) {
+            throw new Error("No se puede confirmar una compra con el carrito vacío.");
+        }
+
+        payload.items.forEach((item) => {
+            if (!Number.isInteger(item.idProducto)) {
+                throw new Error("Hay productos en el carrito sin un identificador válido. Vuelve a agregarlos desde el catálogo.");
+            }
+            if (!Number.isInteger(item.cantidad) || item.cantidad <= 0) {
+                throw new Error("Hay cantidades inválidas en el carrito.");
+            }
+        });
+    }
+
+    async function confirmarCompra() {
+        const payload = construirPayloadCompra();
+        validarPayload(payload);
+
+        const headers = {
+            "Content-Type": "application/json"
+        };
+
+        if (csrfToken) {
+            headers[csrfHeader] = csrfToken;
+        }
+
+        const response = await fetch(ENDPOINT_CONFIRMAR_COMPRA, {
+            method: "POST",
+            headers,
+            body: JSON.stringify(payload)
+        });
+
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok || data.ok === false) {
+            throw new Error(data.mensaje || "No se pudo registrar la compra.");
+        }
+
+        localStorage.removeItem(CLAVE_CARRITO);
+        window.dispatchEvent(new CustomEvent("carrito:actualizado", {
+            detail: {carrito: []}
+        }));
+
+        alert(data.mensaje || "Compra registrada correctamente.");
+        window.location.href = "/carrito";
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
         renderizarResumen();
 
-        botonFinalizar.addEventListener("click", () => {
-            if (botonFinalizar.disabled) {
+        botonFinalizar.addEventListener("click", async () => {
+            if (botonFinalizar.disabled || compraEnProceso) {
                 return;
             }
 
-            console.log("Carrito a pagar:", leerCarrito());
-            console.log("Método de pago seleccionado:", obtenerMetodoSeleccionado());
+            compraEnProceso = true;
+            botonFinalizar.disabled = true;
+
+            try {
+                await confirmarCompra();
+            } catch (error) {
+                console.error("Error al confirmar la compra.", error);
+                alert(error.message || "Ocurrió un error al confirmar la compra.");
+                compraEnProceso = false;
+                renderizarResumen();
+            }
         });
     });
 
