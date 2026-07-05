@@ -35,6 +35,13 @@
     text-decoration: underline !important;
 }
 
+.register-section-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--primary-brown);
+    margin-bottom: 14px;
+}
+
 /* --- CONTENEDORES DE INPUT --- */
 .input-group-pikafast {
     border: 2px solid var(--primary-brown);

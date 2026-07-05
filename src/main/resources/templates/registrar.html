@@ -62,12 +62,33 @@
             <!-- Formulario Registro -->
             <div class="col-lg-5 offset-lg-1 px-4">
                 <h1 class="login-title mb-4">Registro</h1>
-                <form th:action="@{/registrar}" method="post" th:object="${usuario}" id="register-form" >
+                <form th:action="@{/registrar}" method="post" th:object="${registroCliente}" id="register-form" >
+
+                    <div th:if="${errorRegistro}" class="alert alert-danger" th:text="${errorRegistro}"></div>
+
+                    <h2 class="register-section-title">Datos Personales</h2>
                     
-                    <label class="login-label"><i class="bi bi-person me-2"></i>Nombre</label>
+                    <label class="login-label"><i class="bi bi-person me-2"></i>Nombres</label>
                     <div class="input-group input-group-pikafast mb-3">
-                        <input type="text" th:field="*{nombre}" class="form-control" placeholder="Tu nombre completo" required>
+                        <input type="text" th:field="*{nombres}" class="form-control" placeholder="Tus nombres" required>
                     </div>
+
+                    <label class="login-label"><i class="bi bi-person-vcard me-2"></i>Apellidos</label>
+                    <div class="input-group input-group-pikafast mb-3">
+                        <input type="text" th:field="*{apellidos}" class="form-control" placeholder="Tus apellidos" required>
+                    </div>
+
+                    <label class="login-label"><i class="bi bi-card-text me-2"></i>DNI</label>
+                    <div class="input-group input-group-pikafast mb-3">
+                        <input type="text" th:field="*{dni}" class="form-control" placeholder="Tu DNI" required>
+                    </div>
+
+                    <label class="login-label"><i class="bi bi-telephone me-2"></i>Teléfono</label>
+                    <div class="input-group input-group-pikafast mb-3">
+                        <input type="tel" th:field="*{telefono}" class="form-control" placeholder="999 999 999" required>
+                    </div>
+
+                    <h2 class="register-section-title mt-4">Datos de Acceso</h2>
 
                     <label class="login-label"><i class="bi bi-envelope me-2"></i>Correo</label>
                     <div class="input-group input-group-pikafast mb-3">
@@ -75,16 +96,16 @@
                     </div>
 
                     <label class="login-label"><i class="bi bi-lock me-2"></i>Contraseña</label>
-                    <div class="input-group input-group-pikafast mb-4">
+                    <div class="input-group input-group-pikafast mb-3">
                         <input type="password" th:field="*{contrasenia}" id="password-input" class="form-control" required>
                         <span class="input-group-text btn-toggle-pass" style="cursor: pointer;">
                             <i class="bi bi-eye-slash bi-custom" style="font-size: 1.2rem;"></i>
                         </span>
                     </div>
-                    
-                    <label class="login-label"><i class="bi bi-telephone me-2"></i>Teléfono</label>
+
+                    <label class="login-label"><i class="bi bi-shield-lock me-2"></i>Confirmar contraseña</label>
                     <div class="input-group input-group-pikafast mb-3">
-                        <input type="tel" th:field="*{telefono}" class="form-control" placeholder="999 999 999" required>
+                        <input type="password" th:field="*{confirmarContrasenia}" class="form-control" required>
                     </div>
 
 

@@ -1,4 +1,8 @@
 /* --- FOOTER --- */
+.site-footer {
+    margin-top: auto;
+}
+
 .footer-pikafast { 
     background-color: var(--bg-footer-top); 
     padding: 3% 0; 

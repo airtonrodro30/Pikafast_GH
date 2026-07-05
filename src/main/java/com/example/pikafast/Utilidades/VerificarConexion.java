@@ -24,7 +24,7 @@ public class VerificarConexion {
             usuarios.forEach(u
                     -> System.out.println(
                             "ID: " + u.getIdUsuario()
-                            + " Nombre: " + u.getNombre()
+                            + " Email: " + u.getEmail()
                             + " Password: " + u.getContrasenia())
             );
 
