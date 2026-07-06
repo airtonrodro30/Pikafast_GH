@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         try {
-            var response = await fetch('/dashboard/api/chart?tipo=' + encodeURIComponent(tipo));
+var response = await fetch('/api/v1/dashboard/chart?tipo=' + encodeURIComponent(tipo));
 
             if (!response.ok) {
                 throw new Error('No se pudo cargar la data del grafico');
