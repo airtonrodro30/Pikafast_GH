@@ -6,7 +6,7 @@
 
     <div class="admin-menu-title">Opciones</div>
     <nav class="admin-nav">
-        <a th:href="@{/dashboard}" class="admin-nav-link" 
+        <a th:href="@{/dashboard}" class="admin-nav-link"
            th:classappend="${activeMenu == 'dashboard'} ? ' active' : ''">
             <i class="bi bi-speedometer2"></i>
             <span>Dashboard</span>
@@ -42,7 +42,6 @@
         </a>
     </nav>
 
-    <!-- Imagen de Perfil -->
     <div class="dropup-center dropup mt-auto">
         <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
            data-bs-toggle="dropdown"
@@ -70,4 +69,3 @@
         </ul>
     </div>
 </aside>
-

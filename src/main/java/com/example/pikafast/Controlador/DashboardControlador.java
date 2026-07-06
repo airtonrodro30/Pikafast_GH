@@ -11,7 +11,7 @@ public class DashboardControlador {
     public String dashboard(Model model) {
 
         model.addAttribute("activeMenu", "dashboard");
-        model.addAttribute("contentPage", "admin/home");
+        model.addAttribute("contentPage", "admin/dashboard-content");
 
         return "dashboard";
     }

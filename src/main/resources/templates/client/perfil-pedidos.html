@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pikafast - Tus Pedidos</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/perfil-cliente.css}">
+</head>
+<body>
+    <th:block th:replace="~{fragments/header :: headerFragment}"></th:block>
+
+    <main class="container my-2 py-3">
+        <section class="profile-hero mb-4">
+            <div class="d-flex align-items-start gap-3">
+                <div class="profile-hero-icon">
+                    <i class="bi bi-receipt-cutoff"></i>
+                </div>
+                <div>
+                    <h1 class="profile-title mb-2">Tus Pedidos</h1>
+                    <p class="profile-subtitle mb-0">Revisa el historial y estado de tus pedidos realizados.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="toast-container position-fixed top-0 end-0 p-3 client-toast-container">
+            <div th:if="${pedidoError}"
+                 class="toast align-items-center text-bg-danger border-0"
+                 role="alert"
+                 aria-live="assertive"
+                 aria-atomic="true"
+                 data-bs-autohide="true"
+                 data-bs-delay="7000">
+                <div class="d-flex">
+                    <div class="toast-body" th:text="${pedidoError}"></div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Cerrar"></button>
+                </div>
+            </div>
+
+            <div th:if="${pedidoExito}"
+                 class="toast align-items-center text-bg-success border-0"
+                 role="alert"
+                 aria-live="assertive"
+                 aria-atomic="true"
+                 data-bs-autohide="true"
+                 data-bs-delay="7000">
+                <div class="d-flex">
+                    <div class="toast-body" th:text="${pedidoExito}"></div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Cerrar"></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 client-layout">
+            <div class="col-lg-4 col-xl-3 client-sidebar-col" th:if="${perfilDisponible}">
+                <th:block th:replace="~{client/fragments/sidebar :: sidebarFragment}"></th:block>
+            </div>
+
+            <div class="col-lg-8 col-xl-9 client-content-col" th:if="${!perfilDisponible}">
+                <section class="profile-card">
+                    <div class="alert alert-warning mb-0">
+                        No se encontró un cliente asociado a la cuenta autenticada <strong th:text="${emailCuenta}">usuario@correo.com</strong>.
+                    </div>
+                </section>
+            </div>
+
+            <div class="col-lg-8 col-xl-9 client-content-col" th:if="${perfilDisponible}">
+                <section class="profile-card">
+                    <div class="section-header">
+                        <div>
+                            <h2>Historial de pedidos</h2>
+                            <p>Consulta el total, la fecha y el estado actual de cada pedido.</p>
+                        </div>
+                    </div>
+
+                    <div th:if="${#lists.isEmpty(pedidos)}" class="empty-address-note mb-0">
+                        Aún no tienes pedidos registrados.
+                    </div>
+
+                    <div th:if="${!#lists.isEmpty(pedidos)}" class="client-orders-list">
+                        <article th:each="pedido : ${pedidos}" class="client-order-card">
+                            <div class="client-order-top">
+                                <div>
+                                    <span class="client-order-label">Pedido</span>
+                                    <h3 th:text="'#ORD-' + ${pedido.idPedido}"></h3>
+                                </div>
+                                <div class="client-order-status">
+                                    <span class="client-order-badge"
+                                          th:text="${pedido.estadoPedido}"
+                                          th:classappend="${pedido.estadoPedido != null ? ' client-order-badge-' + #strings.toLowerCase(pedido.estadoPedido.name()) : ''}"></span>
+
+                                    <form th:if="${pedido.estadoPedido != null and pedido.estadoPedido.name() == 'PENDIENTE'}"
+                                          th:action="@{/cliente/pedidos/{id}/cancelar(id=${pedido.idPedido})}"
+                                          method="post"
+                                          class="client-cancel-form"
+                                          th:attr="data-order-label='Pedido #ORD-' + ${pedido.idPedido}"
+                                          onsubmit="return confirm('¿Desea cancelar el ' + this.dataset.orderLabel + '?');">
+                                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                        <button type="submit" class="btn btn-danger client-cancel-btn">Cancelar</button>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="client-order-grid">
+                                <div>
+                                    <span class="client-order-label">Fecha</span>
+                                    <strong th:text="${pedido.fecha != null ? #temporals.format(pedido.fecha, 'dd/MM/yyyy HH:mm') : 'Sin fecha'}"></strong>
+                                </div>
+                                <div>
+                                    <span class="client-order-label">Tipo de envío</span>
+                                    <strong th:text="${pedido.tipoEnvio != null ? pedido.tipoEnvio : 'No definido'}"></strong>
+                                </div>
+                                <div>
+                                    <span class="client-order-label">Total</span>
+                                    <strong th:text="'S/. ' + ${pedido.precioTotal}"></strong>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <th:block th:replace="~{fragments/footer :: footerFragment}"></th:block>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+            crossorigin="anonymous">
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.toast').forEach(function (toastElement) {
+                bootstrap.Toast.getOrCreateInstance(toastElement).show();
+            });
+        });
+    </script>
+</body>
+</html>

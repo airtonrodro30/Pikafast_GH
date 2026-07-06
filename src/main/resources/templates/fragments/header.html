@@ -21,7 +21,8 @@
 
             <div class="col-8 col-lg-4 d-flex align-items-center justify-content-end h-100 pe-5">
 
-                <div class="order-date-outer-container me-4">
+                <div class="order-date-outer-container me-4"
+                     th:if="${hideHeaderOrderActions == null or !hideHeaderOrderActions}">
                     <div class="date-badge-inner">
                         <span class="date-label">Realizando un pedido para el:</span>
                         <div class="date-value">
@@ -33,7 +34,8 @@
                 </div>
 
                 <!-- CARRITO -->
-                <div class="header-icon me-4">
+                <div class="header-icon me-4"
+                     th:if="${hideHeaderOrderActions == null or !hideHeaderOrderActions}">
                     <div id="cart-icon" style="cursor:pointer;">
                         <i class="bi bi-bag bi-custom"></i>
                     </div>
@@ -52,9 +54,9 @@
                         <ul class="dropdown-menu dropdown-menu-end shadow border-0" style="border-radius: 15px; overflow: hidden; margin-top: 10px;">
                             <!-- Se muestra si el usuario esta autenticado -->
                             <div sec:authorize="isAuthenticated()">
-                                <li>
+                                <li sec:authorize="hasRole('CLIENTE')">
                                     <a class="dropdown-item py-2 fw-bold text-center" 
-                                       th:href="@{/perfil}">Perfil</a>
+                                       th:href="@{/cliente/perfil}">Perfil</a>
                                 </li>
                                 <li sec:authorize="hasRole('ADMIN')">
                                     <a class="dropdown-item py-2 fw-bold text-center" 
