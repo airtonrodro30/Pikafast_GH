@@ -238,6 +238,10 @@ body {
 .badge-entrega { background: #90caf9; color: #0d47a1; }
 .badge-finalizado { background: #a5d6a7; color: #1b5e20; }
 .badge-cancelado { background: #ef9a9a; color: #b71c1c; }
+.badge-pendiente { background: #fff59d; color: #8a6400; }
+.badge-en_preparacion { background: #ffe082; color: #9a5a00; }
+.badge-en_camino { background: #90caf9; color: #0d47a1; }
+.badge-entregado { background: #a5d6a7; color: #1b5e20; }
 .badge-admin { background: #ce93d8; color: #4a148c; }
 .badge-empleado { background: #80deea; color: #006064; }
 
@@ -264,6 +268,44 @@ body {
 .btn-view {
   background: #90caf9;
   color: #0d47a1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.admin-order-actions {
+  display: grid;
+  grid-template-columns: auto minmax(150px, 190px);
+  gap: 10px 12px;
+  align-items: start;
+}
+
+.admin-order-view {
+  grid-row: 1 / span 2;
+  align-self: center;
+}
+
+.admin-status-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.admin-status-select {
+  min-width: 150px;
+  width: 100%;
+  font-size: 0.9rem;
+}
+
+.admin-status-btn {
+  padding: 9px 14px;
+  width: 100%;
+}
+
+.admin-toast-container {
+  z-index: 1085;
 }
 
 .category-admin-card {
@@ -375,6 +417,13 @@ body {
   margin: 10px 0;
 }
 
+.chart-container {
+  width: 100%;
+  min-height: 360px;
+  display: flex;
+  justify-content: center;
+}
+
 @media (max-width: 991px) {
   .admin-layout { display: block; }
   .admin-sidebar {
@@ -391,4 +440,8 @@ body {
   }
   .admin-header { flex-direction: column; }
   .admin-btn { width: 100%; }
+  .admin-order-actions { grid-template-columns: 1fr; }
+  .admin-order-view { grid-row: auto; }
+  .admin-status-form { width: 100%; }
+  .admin-status-select { min-width: 100%; }
 }

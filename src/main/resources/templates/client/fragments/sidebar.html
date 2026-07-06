@@ -1,0 +1,26 @@
+<aside th:fragment="sidebarFragment" class="client-sidebar">
+    <div class="client-sidebar-brand">
+        <div class="client-sidebar-brand-icon">
+            <i class="bi bi-person-circle"></i>
+        </div>
+        <div>
+            <h2>Mi Cuenta</h2>
+        </div>
+    </div>
+
+    <div class="client-sidebar-title">Opciones</div>
+    <nav class="client-sidebar-nav">
+        <a th:href="@{/cliente/perfil}"
+           class="client-sidebar-link text-decoration-none"
+           th:classappend="${activeClientMenu == 'perfil'} ? ' is-active' : ''">
+            <i class="bi bi-person"></i>
+            <span>Tu Perfil</span>
+        </a>
+        <a th:href="@{/cliente/pedidos}"
+           class="client-sidebar-link text-decoration-none"
+           th:classappend="${activeClientMenu == 'pedidos'} ? ' is-active' : ''">
+            <i class="bi bi-receipt"></i>
+            <span>Tus Pedidos</span>
+        </a>
+    </nav>
+</aside>

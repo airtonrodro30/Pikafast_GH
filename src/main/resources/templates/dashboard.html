@@ -19,10 +19,14 @@
 
         <!-- CSS Local -->
        <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+       <link rel="stylesheet" th:if="${pageStylesheet != null}" th:href="${pageStylesheet}">
+
+        <!-- echarts -->
+        <script src="https://cdn.jsdelivr.net/npm/echarts@6.1.0/dist/echarts.min.js"></script>
     </head>
     <body>
         <!-- Sidebar -->
-        <th:block th:replace="~{fragments/sidebar :: sidebarFragment}"></th:block>
+        <th:block th:replace="~{admin/fragments/sidebar :: sidebarFragment}"></th:block>
         
         <!-- Contenido del Panel -->
         <th:block th:replace="~{${contentPage} :: dashboardContent}"></th:block>
@@ -31,6 +35,13 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
                 crossorigin="anonymous">
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                document.querySelectorAll('.toast').forEach(function (toastElement) {
+                    bootstrap.Toast.getOrCreateInstance(toastElement).show();
+                });
+            });
         </script>
     </body>
 </html>

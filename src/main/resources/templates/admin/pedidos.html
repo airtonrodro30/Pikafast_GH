@@ -13,6 +13,34 @@
             </div>
         </div>
 
+        <div class="toast-container position-fixed top-0 end-0 p-3 admin-toast-container">
+            <div th:if="${pedidoError}"
+                 class="toast align-items-center text-bg-danger border-0"
+                 role="alert"
+                 aria-live="assertive"
+                 aria-atomic="true"
+                 data-bs-autohide="true"
+                 data-bs-delay="7000">
+                <div class="d-flex">
+                    <div class="toast-body" th:text="${pedidoError}"></div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Cerrar"></button>
+                </div>
+            </div>
+
+            <div th:if="${pedidoExito}"
+                 class="toast align-items-center text-bg-success border-0"
+                 role="alert"
+                 aria-live="assertive"
+                 aria-atomic="true"
+                 data-bs-autohide="true"
+                 data-bs-delay="7000">
+                <div class="d-flex">
+                    <div class="toast-body" th:text="${pedidoExito}"></div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Cerrar"></button>
+                </div>
+            </div>
+        </div>
+
         <div class="row g-3 mt-2">
             <div class="col-lg-4">
                 <div class="input-group admin-search">
@@ -73,14 +101,32 @@
         <td th:text="${#temporals.format(pedido.fecha, 'dd/MM/yyyy HH:mm')}"></td>
 
         <td>
-            <span th:text="${pedido.estadoPedido}"></span>
+            <span class="badge"
+                  th:text="${pedido.estadoPedido}"
+                  th:classappend="${pedido.estadoPedido != null ? ' badge-' + #strings.toLowerCase(pedido.estadoPedido.name()) : ''}"></span>
         </td>
 
         <td>
-            <a th:href="@{/dashboard/pedidos/ver/{id}(id=${pedido.idPedido})}"
-                    class="btn-view">
-            <i class="bi bi-eye me-1"></i>Ver
-                            </a>
+            <div class="admin-order-actions">
+                <a th:href="@{/dashboard/pedidos/ver/{id}(id=${pedido.idPedido})}"
+                        class="btn-view admin-order-view">
+                    <i class="bi bi-eye me-1"></i>Ver
+                </a>
+
+                <form th:if="${pedido.estadoPedido != null and pedido.estadoPedido.name() != 'CANCELADO'}"
+                      th:action="@{/dashboard/pedidos/{id}/estado(id=${pedido.idPedido})}"
+                      method="post"
+                      class="admin-status-form">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    <select name="estadoPedido" class="form-select admin-form-select admin-status-select">
+                        <option th:each="estado : ${estadosAdmin}"
+                                th:value="${estado.name()}"
+                                th:text="${#strings.replace(estado.name(), '_', ' ')}"
+                                th:selected="${pedido.estadoPedido == estado}"></option>
+                    </select>
+                    <button type="submit" class="btn admin-btn admin-status-btn">Actualizar</button>
+                </form>
+            </div>
         </td>
 
     </tr>

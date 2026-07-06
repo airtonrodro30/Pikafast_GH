@@ -4,11 +4,15 @@ import com.example.pikafast.DTO.DireccionClienteDTO;
 import com.example.pikafast.DTO.PerfilClienteDTO;
 import com.example.pikafast.Entidad.Cliente;
 import com.example.pikafast.Entidad.Direccion;
+import com.example.pikafast.Entidad.Pedido;
 import com.example.pikafast.Entidad.Usuario;
+import com.example.pikafast.Repositorio.PedidoRepositorio;
 import com.example.pikafast.Servicio.ClienteServicio;
 import com.example.pikafast.Servicio.DireccionServicio;
+import com.example.pikafast.Servicio.PedidoServicio;
 import com.example.pikafast.Servicio.UsuarioServicio;
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,28 +21,35 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/perfil")
+@RequestMapping("/cliente")
 public class PerfilClienteControlador {
 
     private final ClienteServicio clienteServicio;
     private final DireccionServicio direccionServicio;
     private final UsuarioServicio usuarioServicio;
+    private final PedidoRepositorio pedidoRepositorio;
+    private final PedidoServicio pedidoServicio;
 
     public PerfilClienteControlador(ClienteServicio clienteServicio,
             DireccionServicio direccionServicio,
-            UsuarioServicio usuarioServicio) {
+            UsuarioServicio usuarioServicio,
+            PedidoRepositorio pedidoRepositorio,
+            PedidoServicio pedidoServicio) {
         this.clienteServicio = clienteServicio;
         this.direccionServicio = direccionServicio;
         this.usuarioServicio = usuarioServicio;
+        this.pedidoRepositorio = pedidoRepositorio;
+        this.pedidoServicio = pedidoServicio;
     }
 
-    @GetMapping
+    @GetMapping("/perfil")
     public String mostrarPerfil(Principal principal,
             @RequestParam(name = "editarDatos", defaultValue = "false") boolean editarDatos,
             @RequestParam(name = "editarDireccion", defaultValue = "false") boolean editarDireccion,
@@ -57,8 +68,39 @@ public class PerfilClienteControlador {
                 editarDatos,
                 editarDireccion
         );
+        model.addAttribute("activeClientMenu", "perfil");
 
-        return "perfil-cliente";
+        return "client/perfil-cliente";
+    }
+
+    @GetMapping("/pedidos")
+    public String mostrarPedidosCliente(Principal principal, Model model) {
+        Usuario usuario = obtenerUsuarioAutenticado(principal);
+        Cliente cliente = obtenerClienteAutenticado(principal);
+        List<Pedido> pedidos = cliente != null
+                ? pedidoRepositorio.findByCliente_IdClienteOrderByFechaDesc(cliente.getIdCliente())
+                : List.of();
+
+        model.addAttribute("perfilDisponible", cliente != null);
+        model.addAttribute("emailCuenta", usuario != null ? usuario.getEmail() : "");
+        model.addAttribute("pedidos", pedidos);
+        model.addAttribute("activeClientMenu", "pedidos");
+
+        return "client/perfil-pedidos";
+    }
+
+    @PostMapping("/pedidos/{id}/cancelar")
+    public String cancelarPedidoCliente(@PathVariable Integer id,
+            Principal principal,
+            RedirectAttributes redirectAttributes) {
+        try {
+            pedidoServicio.cancelarPedidoPorCliente(id, principal != null ? principal.getName() : null);
+            redirectAttributes.addFlashAttribute("pedidoExito", "El pedido #ORD-" + id + " fue cancelado.");
+        } catch (RuntimeException ex) {
+            redirectAttributes.addFlashAttribute("pedidoError", ex.getMessage());
+        }
+
+        return "redirect:/cliente/pedidos";
     }
 
     @PostMapping("/datos")
@@ -72,7 +114,7 @@ public class PerfilClienteControlador {
 
         if (usuario == null || cliente == null) {
             redirectAttributes.addFlashAttribute("perfilError", "No se encontró un perfil de cliente asociado a la cuenta autenticada.");
-            return "redirect:/perfil";
+            return "redirect:/cliente/perfil";
         }
 
         if (tieneCamposVacios(
@@ -83,21 +125,21 @@ public class PerfilClienteControlador {
                 perfilCliente.getEmail())) {
             model.addAttribute("perfilError", "Completa todos los datos personales antes de guardar.");
             cargarVistaPerfil(model, usuario, cliente, direccion, perfilCliente, mapearDireccion(direccion), true, false);
-            return "perfil-cliente";
+            return "client/perfil-cliente";
         }
 
         Usuario usuarioPorEmail = usuarioServicio.findByEmail(perfilCliente.getEmail());
         if (usuarioPorEmail != null && !usuarioPorEmail.getIdUsuario().equals(usuario.getIdUsuario())) {
             model.addAttribute("perfilError", "El correo ingresado ya pertenece a otra cuenta.");
             cargarVistaPerfil(model, usuario, cliente, direccion, perfilCliente, mapearDireccion(direccion), true, false);
-            return "perfil-cliente";
+            return "client/perfil-cliente";
         }
 
         Optional<Cliente> clientePorDni = clienteServicio.findByDni(perfilCliente.getDni());
         if (clientePorDni.isPresent() && !clientePorDni.get().getIdCliente().equals(cliente.getIdCliente())) {
             model.addAttribute("perfilError", "El DNI ingresado ya pertenece a otro cliente.");
             cargarVistaPerfil(model, usuario, cliente, direccion, perfilCliente, mapearDireccion(direccion), true, false);
-            return "perfil-cliente";
+            return "client/perfil-cliente";
         }
 
         cliente.setNombres(perfilCliente.getNombres());
@@ -116,7 +158,7 @@ public class PerfilClienteControlador {
         }
 
         redirectAttributes.addFlashAttribute("perfilExito", "Tus datos personales fueron actualizados.");
-        return "redirect:/perfil";
+        return "redirect:/cliente/perfil";
     }
 
     @PostMapping("/direccion")
@@ -130,7 +172,7 @@ public class PerfilClienteControlador {
 
         if (usuario == null || cliente == null) {
             redirectAttributes.addFlashAttribute("perfilError", "No se encontró un perfil de cliente asociado a la cuenta autenticada.");
-            return "redirect:/perfil";
+            return "redirect:/cliente/perfil";
         }
 
         if (tieneCamposVacios(
@@ -141,7 +183,7 @@ public class PerfilClienteControlador {
                 direccionCliente.getCodigoPostal())) {
             model.addAttribute("perfilError", "Completa todos los datos de la dirección antes de guardar.");
             cargarVistaPerfil(model, usuario, cliente, direccion, mapearPerfilCliente(cliente, usuario), direccionCliente, false, true);
-            return "perfil-cliente";
+            return "client/perfil-cliente";
         }
 
         Direccion direccionAGuardar = direccion != null ? direccion : new Direccion();
@@ -157,7 +199,7 @@ public class PerfilClienteControlador {
         redirectAttributes.addFlashAttribute("direccionExito", direccion == null
                 ? "Tu dirección fue registrada correctamente."
                 : "Tu dirección fue actualizada correctamente.");
-        return "redirect:/perfil";
+        return "redirect:/cliente/perfil";
     }
 
     private Usuario obtenerUsuarioAutenticado(Principal principal) {

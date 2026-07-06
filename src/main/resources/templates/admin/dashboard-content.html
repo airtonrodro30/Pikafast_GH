@@ -1,0 +1,41 @@
+<main th:fragment="dashboardContent" class="admin-content">
+    <h1>
+        Panel de Administración PIKAFAST
+    </h1>
+
+    <!-- Diagramas Echart -->
+    <div class="container px-auto">
+        <div class="row row-cols-1 gy-4 mb-5">
+            <div class="col">
+                <section class="dashboard-card">
+                    <div class="mb-0">
+                        <label for="chart-type" class="form-label">Tipo de reporte</label>
+                        <select id="chart-type" class="form-select">
+                            <option value="productos-mas-vendidos">Productos mas vendidos</option>
+                            <option value="pedidos-por-estado">Numero de pedidos por estado</option>
+                            <option value="pedidos-por-mes">Numero de pedidos por mes</option>
+                        </select>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div class="row row-cols-1 gy-4">
+            <!-- 1) Grafico 1 -->
+            <div class="col">
+                <section id="bar-chart-panel" class="dashboard-card">
+                    <div id="bar-chart" class="chart-container"></div>
+                    <script th:src="@{/js/bar-chart.js}"></script>
+                </section>
+            </div>
+
+            <!-- 2) Grafico 2  -->
+            <div class="col">
+                <section id="pie-chart-panel" class="dashboard-card" style="display: none;">
+                    <div id="pie-chart" class="chart-container"></div>
+                    <script th:src="@{/js/pie-chart.js}"></script>
+                </section>
+            </div>
+
+        </div>
+    </div>
+</main>
