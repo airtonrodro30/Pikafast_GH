@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
-@RequestMapping("/dashboard/api")
+@RequestMapping("/api/v1/dashboard")
 public class DashboardRestControlador {
 
     private final PedidoRepositorio pedidoRepositorio;
