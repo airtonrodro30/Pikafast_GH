@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     async function cargarGrafico() {
         try {
-            var response = await fetch('/dashboard/api/chart?tipo=pedidos-por-mes');
+var response = await fetch('/api/v1/dashboard/chart?tipo=pedidos-por-mes');
 
             if (!response.ok) {
                 throw new Error('No se pudo cargar la data del grafico circular');

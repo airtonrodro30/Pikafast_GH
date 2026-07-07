@@ -34,14 +34,19 @@ public class ConfigSeguridad {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(csrf -> csrf
+                .ignoringRequestMatchers("/api/v1/chat/**")
+                )
                 // Autenticación: usa mi UserDetailsService para cargar usuarios desde BD
                 .userDetailsService(userDetailsService) // <-- Enlaza al userDetailsService
                 .authorizeHttpRequests(auth -> auth
                 // Permite que cualquiera entre al registro y login sin autenticarse
                 .requestMatchers("/").permitAll()
                 .requestMatchers("/assets/**", "/css/**", "/js/**").permitAll()
+                .requestMatchers("/error").permitAll()
                 .requestMatchers("/login", "/registrar", "/uploaded-images/**").permitAll()
                 .requestMatchers("/productos","/productos/**").permitAll()
+                .requestMatchers("/api/**").permitAll()
                 .requestMatchers("/dashboard/**", "/admin/**").hasAnyRole("ADMIN")
                 // Cualquier otra ruta requerirá inicio de sesión
                 .anyRequest().authenticated()
