@@ -1,4 +1,6 @@
 <div th:fragment="footerFragment" class="site-footer">
+    <link rel="stylesheet" th:href="@{/css/chat-widget.css}">
+
     <footer class="footer-pikafast">
         <div class="container">
             <div class="row">
@@ -30,4 +32,58 @@
             </div>
         </div>
     </div>
+
+    <section id="pika-chat"
+             class="pika-chat"
+             data-endpoint="/api/v1/chat/full"
+             data-max-messages="5">
+        <button id="pika-chat-toggle"
+                class="pika-chat__toggle"
+                type="button"
+                aria-label="Abrir chat de Pika AI">
+            <img th:src="@{/assets/img/logo.png}" alt="Pika AI">
+        </button>
+
+        <div id="pika-chat-panel" class="pika-chat__panel" hidden>
+            <header class="pika-chat__header">
+                <div class="pika-chat__header-row">
+                    <div class="pika-chat__brand">
+                        <img th:src="@{/assets/img/logo.png}" alt="Pika AI">
+                    </div>
+                    <div>
+                        <h2 class="pika-chat__title">Pika AI</h2>
+                        <span id="pika-chat-counter" class="pika-chat__counter">0 de 5 mensajes disponibles</span>
+                    </div>
+                    <button id="pika-chat-close"
+                            class="pika-chat__close"
+                            type="button"
+                            aria-label="Cerrar chat">
+                        <i class="bi bi-x-lg"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div id="pika-chat-messages" class="pika-chat__messages"></div>
+
+            <div class="pika-chat__composer">
+                <div id="pika-chat-status" class="pika-chat__status" hidden></div>
+                <form id="pika-chat-form" class="pika-chat__form">
+                    <textarea id="pika-chat-textarea"
+                              class="form-control pika-chat__textarea"
+                              rows="2"
+                              maxlength="1200"
+                              placeholder="Escribe tu consulta aqui..."
+                              aria-label="Mensaje para Pika AI"></textarea>
+                    <button id="pika-chat-send"
+                            class="pika-chat__send"
+                            type="submit"
+                            aria-label="Enviar mensaje">
+                        <i class="bi bi-send-fill"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script th:src="@{/js/chat-widget.js}"></script>
 </div>

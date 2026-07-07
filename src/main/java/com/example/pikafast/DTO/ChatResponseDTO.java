@@ -1,25 +1,25 @@
 package com.example.pikafast.DTO;
 
 public class ChatResponseDTO {
-    private String text;
+    private String content;
     private int promptTokens;
     private int completionTokens;
     private int totalTokens;
 
-    public ChatResponseDTO(String text, int promptTokens, int completionTokens, int totalTokens) {
-        this.text = text;
+    public ChatResponseDTO(String content, int promptTokens, int completionTokens, int totalTokens) {
+        this.content = content;
         this.promptTokens = promptTokens;
         this.completionTokens = completionTokens;
         this.totalTokens = totalTokens;
     }
 
     // Getter & Setter
-    public String getText() {
-        return text;
+    public String getContent() {
+        return content;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public int getPromptTokens() {
