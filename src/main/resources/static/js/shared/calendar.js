@@ -1,32 +1,54 @@
+function formatDateForInput(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+}
+
+function formatDateForDisplay(date) {
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+}
+
+function parseInputDate(value) {
+    if (!value) {
+        return null;
+    }
+
+    const [year, month, day] = value.split("-").map(Number);
+    if (!year || !month || !day) {
+        return null;
+    }
+
+    return new Date(year, month - 1, day);
+}
+
 // Mostrar Calendario
 export function showCalendar(datePicker, displayDate, calendarTrigger) {
-    if (datePicker && displayDate) {
-        // Forzar la apertura del calendario al hacer clic en cualquier parte del bloque amarillo o blanco
-        if (calendarTrigger) {
-            calendarTrigger.addEventListener("click", () => {
-                try {
-                    datePicker.showPicker(); // Método oficial para abrir el selector de fecha
-                } catch (err) {
-                    console.log("El navegador no soporta showPicker, usando click alternativo");
-                    datePicker.click();
-                }
-            });
-        }
+    if (!datePicker || !displayDate) {
+        return;
+    }
 
-        // Actualizar el texto cuando el usuario selecciona una fecha
-        datePicker.addEventListener("change", (e) => {
-            const date = new Date(e.target.value);
+    const currentDate = parseInputDate(datePicker.value) ?? new Date();
+    datePicker.value = formatDateForInput(currentDate);
+    displayDate.textContent = formatDateForDisplay(currentDate);
 
-            // Ajuste de zona horaria para evitar que se reste un día
-            date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
-
-            const day = String(date.getDate()).padStart(2, '0');
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const year = date.getFullYear();
-
-            if (!isNaN(date.getTime())) {
-                displayDate.textContent = `${day}/${month}/${year}`;
+    if (calendarTrigger) {
+        calendarTrigger.addEventListener("click", () => {
+            try {
+                datePicker.showPicker();
+            } catch (err) {
+                datePicker.click();
             }
         });
     }
+
+    datePicker.addEventListener("change", (e) => {
+        const date = parseInputDate(e.target.value);
+        if (date) {
+            displayDate.textContent = formatDateForDisplay(date);
+        }
+    });
 }

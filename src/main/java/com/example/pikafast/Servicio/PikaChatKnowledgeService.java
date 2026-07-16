@@ -1,11 +1,13 @@
 package com.example.pikafast.Servicio;
 
 import com.example.pikafast.Entidad.Categoria;
+import com.example.pikafast.Entidad.DetallePedido;
 import com.example.pikafast.Entidad.Pedido;
 import com.example.pikafast.Entidad.Producto;
 import com.example.pikafast.Enums.Rol;
 import com.example.pikafast.Repositorio.CategoriaRepositorio;
 import com.example.pikafast.Repositorio.ClienteRepositorio;
+import com.example.pikafast.Repositorio.DetallePedidoRepositorio;
 import com.example.pikafast.Repositorio.PedidoRepositorio;
 import com.example.pikafast.Repositorio.ProductoRepositorio;
 import jakarta.annotation.PostConstruct;
@@ -19,6 +21,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
@@ -29,22 +33,26 @@ public class PikaChatKnowledgeService {
     private static final String OFF_TOPIC_MESSAGE = "Lo siento, pero solo puedo responder con cosas relacionadas a los productos o pedidos realizados";
     private static final String GREETING_MESSAGE = "Hola, dime cual es tu consulta";
     private static final DateTimeFormatter ORDER_DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+    private static final Pattern ORDER_ID_PATTERN = Pattern.compile("\\b(?:pedido|orden|compra)\\s*(?:numero\\s*)?(\\d+)\\b");
 
     private final ProductoRepositorio productoRepositorio;
     private final CategoriaRepositorio categoriaRepositorio;
     private final PedidoRepositorio pedidoRepositorio;
     private final ClienteRepositorio clienteRepositorio;
+    private final DetallePedidoRepositorio detallePedidoRepositorio;
 
     private String baseKnowledgeDocument;
 
     public PikaChatKnowledgeService(ProductoRepositorio productoRepositorio,
             CategoriaRepositorio categoriaRepositorio,
             PedidoRepositorio pedidoRepositorio,
-            ClienteRepositorio clienteRepositorio) {
+            ClienteRepositorio clienteRepositorio,
+            DetallePedidoRepositorio detallePedidoRepositorio) {
         this.productoRepositorio = productoRepositorio;
         this.categoriaRepositorio = categoriaRepositorio;
         this.pedidoRepositorio = pedidoRepositorio;
         this.clienteRepositorio = clienteRepositorio;
+        this.detallePedidoRepositorio = detallePedidoRepositorio;
     }
 
     @PostConstruct
@@ -71,6 +79,10 @@ public class PikaChatKnowledgeService {
 
         if (isGreetingIntent(normalizedMessage)) {
             return ChatIntent.GREETING;
+        }
+
+        if (isOrderDetailIntent(normalizedMessage)) {
+            return ChatIntent.ORDER_DETAIL;
         }
 
         if (isOrderIntent(normalizedMessage)) {
@@ -113,6 +125,7 @@ public class PikaChatKnowledgeService {
         prompt.append(buildCategorySection()).append("\n\n");
         prompt.append(buildCheapestProductSection()).append("\n\n");
         prompt.append(buildOrderSection(authenticatedEmail)).append("\n\n");
+        prompt.append(buildOrderDetailSection(userMessage, authenticatedEmail)).append("\n\n");
         prompt.append("Pregunta del usuario: ").append(userMessage);
 
         return prompt.toString();
@@ -192,7 +205,7 @@ public class PikaChatKnowledgeService {
                     String orderLines = orders.stream()
                             .limit(5)
                             .map(pedido -> String.format(Locale.US,
-                                    "- Pedido #%d | estado: %s | fecha: %s | total: %s | tipo de envio: %s",
+                                    "- Pedido #%d\nestado: %s\nfecha: %s\ntotal: %s\ntipo de envio: %s",
                                     pedido.getIdPedido(),
                                     pedido.getEstadoPedido() != null ? pedido.getEstadoPedido().name() : "SIN_ESTADO",
                                     pedido.getFecha() != null ? pedido.getFecha().format(ORDER_DATE_FORMAT) : "Sin fecha",
@@ -203,6 +216,45 @@ public class PikaChatKnowledgeService {
                     return "Estado de pedidos del usuario autenticado:\n" + orderLines;
                 })
                 .orElse("Estado de pedidos del usuario autenticado: no se encontro un cliente asociado a la cuenta autenticada.");
+    }
+
+    private String buildOrderDetailSection(String userMessage, String authenticatedEmail) {
+        if (authenticatedEmail == null || authenticatedEmail.isBlank()) {
+            return "Detalle de pedido solicitado: no disponible porque el usuario no ha iniciado sesion.";
+        }
+
+        Optional<Integer> requestedOrderId = extractOrderId(userMessage);
+        if (requestedOrderId.isEmpty()) {
+            return "Detalle de pedido solicitado: no se solicito un numero de pedido especifico.";
+        }
+
+        return clienteRepositorio.findByUsuarioEmail(authenticatedEmail)
+                .map(cliente -> pedidoRepositorio.findById(requestedOrderId.get())
+                        .filter(pedido -> pedido.getCliente() != null
+                                && Objects.equals(pedido.getCliente().getIdCliente(), cliente.getIdCliente()))
+                        .map(this::formatOrderDetailSection)
+                        .orElse("Detalle de pedido solicitado: el pedido indicado no pertenece al usuario autenticado o no existe."))
+                .orElse("Detalle de pedido solicitado: no se encontro un cliente asociado a la cuenta autenticada.");
+    }
+
+    private String formatOrderDetailSection(Pedido pedido) {
+        List<DetallePedido> detalles = detallePedidoRepositorio.findByPedido_IdPedido(pedido.getIdPedido());
+        if (detalles.isEmpty()) {
+            return "Detalle de pedido solicitado:\n"
+                    + String.format(Locale.US, "Pedido #%d\nNo hay productos registrados para este pedido.", pedido.getIdPedido());
+        }
+
+        String detailLines = detalles.stream()
+                .map(detalle -> String.format(Locale.US,
+                        "- Pedido #%d\nproducto: %s\ncantidad: %s\nprecio unitario: %s\nsubtotal: %s",
+                        pedido.getIdPedido(),
+                        detalle.getProducto() != null ? safeValue(detalle.getProducto().getNombre()) : "Producto no disponible",
+                        detalle.getCantidad() != null ? detalle.getCantidad() : 0,
+                        formatPrice(detalle.getPrecioUnitario()),
+                        formatPrice(detalle.getSubtotal())))
+                .collect(Collectors.joining("\n\n"));
+
+        return "Detalle de pedido solicitado:\n" + detailLines;
     }
 
     private String buildIntentInstructions(ChatIntent intent) {
@@ -232,6 +284,16 @@ public class PikaChatKnowledgeService {
                     - Responde solo con informacion de pedidos del usuario autenticado.
                     - No mezcles productos o categorias salvo que sea necesario para aclarar un pedido.
                     - Prioriza numero de pedido, estado, fecha y total.
+                    - No uses el caracter | como separador.
+                    - Cuando listes pedidos, coloca cada campo en una linea distinta.
+                    """;
+            case ORDER_DETAIL -> """
+                    Instrucciones de respuesta para ORDER_DETAIL:
+                    - Responde solo con el detalle del pedido especifico solicitado por el usuario autenticado.
+                    - Si el usuario no indica un numero de pedido valido, dilo claramente.
+                    - Prioriza numero de pedido, productos, cantidades, precio unitario y subtotal.
+                    - No uses el caracter | como separador.
+                    - Coloca cada campo en una linea distinta.
                     """;
             case GREETING -> """
                     Instrucciones de respuesta para GREETING:
@@ -251,6 +313,11 @@ public class PikaChatKnowledgeService {
                 "me ayudas", "puedes ayudar", "estas ahi", "hay alguien")
                 || (containsAny(normalizedMessage, "hola", "buenas", "ayuda", "ayudar")
                 && normalizedMessage.split(" ").length <= 5);
+    }
+
+    private boolean isOrderDetailIntent(String normalizedMessage) {
+        return extractOrderId(normalizedMessage).isPresent()
+                && containsAny(normalizedMessage, "producto", "productos", "detalle", "detalles", "incluye", "incluyen", "contenido", "contiene", "cantidad", "cantidades");
     }
 
     private boolean isOrderIntent(String normalizedMessage) {
@@ -322,6 +389,20 @@ public class PikaChatKnowledgeService {
         return false;
     }
 
+    private Optional<Integer> extractOrderId(String value) {
+        String normalizedValue = normalize(value);
+        Matcher matcher = ORDER_ID_PATTERN.matcher(normalizedValue);
+        if (!matcher.find()) {
+            return Optional.empty();
+        }
+
+        try {
+            return Optional.of(Integer.parseInt(matcher.group(1)));
+        } catch (NumberFormatException ex) {
+            return Optional.empty();
+        }
+    }
+
     private boolean containsAny(String normalizedMessage, String... candidates) {
         for (String candidate : candidates) {
             if (normalizedMessage.contains(candidate)) {
@@ -356,6 +437,7 @@ public class PikaChatKnowledgeService {
         PRODUCT_LIST,
         CATEGORY_LIST,
         CHEAPEST_PRODUCT,
+        ORDER_DETAIL,
         ORDER_STATUS,
         OUT_OF_SCOPE
     }

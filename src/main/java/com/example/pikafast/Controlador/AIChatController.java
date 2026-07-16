@@ -65,12 +65,13 @@ public class AIChatController {
         String authenticatedEmail = getAuthenticatedEmail(authentication);
         Rol authenticatedRole = getAuthenticatedRole(authentication);
 
-        if (intent == ChatIntent.ORDER_STATUS && authenticatedEmail == null) {
+        if ((intent == ChatIntent.ORDER_STATUS || intent == ChatIntent.ORDER_DETAIL) && authenticatedEmail == null) {
             return new ChatResponseDTO("Para consultar el estado de tus pedidos debes iniciar sesion.", 0, 0, 0);
         }
 
-        if (intent == ChatIntent.ORDER_STATUS && !chatKnowledgeService.canAccessOrderStatus(authenticatedRole)) {
-            return new ChatResponseDTO("Solo los usuarios cliente pueden consultar el estado de sus pedidos.", 0, 0, 0);
+        if ((intent == ChatIntent.ORDER_STATUS || intent == ChatIntent.ORDER_DETAIL)
+                && !chatKnowledgeService.canAccessOrderStatus(authenticatedRole)) {
+            return new ChatResponseDTO("Solo los usuarios cliente pueden consultar el estado y detalle de sus pedidos.", 0, 0, 0);
         }
 
         String systemPrompt = chatKnowledgeService.buildSystemPrompt(message, authenticatedEmail, intent);
