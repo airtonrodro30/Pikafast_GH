@@ -314,6 +314,21 @@
   color: #9b1c1c;
 }
 
+.client-order-view {
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-weight: 700;
+  border: none;
+  text-decoration: none;
+  background: #90caf9;
+  color: #0d47a1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-align: center;
+}
+
 .client-cancel-form {
   margin: 0;
 }
@@ -331,6 +346,66 @@
 
 .client-order-grid strong {
   color: #4f3522;
+}
+
+.client-detail-header {
+  align-items: center;
+}
+
+.client-detail-back {
+  min-width: auto;
+}
+
+.client-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.client-detail-card {
+  background: #faf5ed;
+  border: 1px solid #f1d7b5;
+  border-radius: 16px;
+  padding: 18px;
+}
+
+.client-detail-card-total {
+  background: linear-gradient(135deg, #fff1dd 0%, #f8bc73 100%);
+}
+
+.client-detail-value {
+  display: block;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--primary-brown);
+}
+
+.client-detail-table {
+  --bs-table-bg: transparent;
+  --bs-table-striped-bg: rgba(255, 241, 221, 0.55);
+  --bs-table-hover-bg: rgba(240, 203, 125, 0.18);
+  color: #4f3522;
+}
+
+.client-detail-table thead th {
+  color: var(--primary-brown);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  border-bottom-width: 1px;
+  border-bottom-color: #e4c8a6;
+}
+
+.client-detail-table tbody td {
+  padding-top: 0.95rem;
+  padding-bottom: 0.95rem;
+  border-bottom-color: #f1d7b5;
+}
+
+.client-detail-empty {
+  text-align: center;
+  color: #7a5a44;
+  font-weight: 700;
+  padding: 22px 15px;
 }
 
 .client-toast-container {
@@ -372,5 +447,15 @@
 
   .client-order-grid {
     grid-template-columns: 1fr;
+  }
+
+  .client-detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 991px) {
+  .client-detail-grid {
+    grid-template-columns: 1fr 1fr;
   }
 }

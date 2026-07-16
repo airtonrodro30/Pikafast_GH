@@ -6,6 +6,7 @@ import com.example.pikafast.Entidad.Cliente;
 import com.example.pikafast.Entidad.Direccion;
 import com.example.pikafast.Entidad.Pedido;
 import com.example.pikafast.Entidad.Usuario;
+import com.example.pikafast.Repositorio.DetallePedidoRepositorio;
 import com.example.pikafast.Repositorio.PedidoRepositorio;
 import com.example.pikafast.Servicio.ClienteServicio;
 import com.example.pikafast.Servicio.DireccionServicio;
@@ -34,17 +35,20 @@ public class PerfilClienteControlador {
     private final ClienteServicio clienteServicio;
     private final DireccionServicio direccionServicio;
     private final UsuarioServicio usuarioServicio;
+    private final DetallePedidoRepositorio detallePedidoRepositorio;
     private final PedidoRepositorio pedidoRepositorio;
     private final PedidoServicio pedidoServicio;
 
     public PerfilClienteControlador(ClienteServicio clienteServicio,
             DireccionServicio direccionServicio,
             UsuarioServicio usuarioServicio,
+            DetallePedidoRepositorio detallePedidoRepositorio,
             PedidoRepositorio pedidoRepositorio,
             PedidoServicio pedidoServicio) {
         this.clienteServicio = clienteServicio;
         this.direccionServicio = direccionServicio;
         this.usuarioServicio = usuarioServicio;
+        this.detallePedidoRepositorio = detallePedidoRepositorio;
         this.pedidoRepositorio = pedidoRepositorio;
         this.pedidoServicio = pedidoServicio;
     }
@@ -87,6 +91,35 @@ public class PerfilClienteControlador {
         model.addAttribute("activeClientMenu", "pedidos");
 
         return "client/perfil-pedidos";
+    }
+
+    @GetMapping("/pedidos/ver/{id}")
+    public String mostrarDetallePedidoCliente(@PathVariable Integer id,
+            Principal principal,
+            Model model,
+            RedirectAttributes redirectAttributes) {
+        Usuario usuario = obtenerUsuarioAutenticado(principal);
+        Cliente cliente = obtenerClienteAutenticado(principal);
+
+        if (cliente == null) {
+            redirectAttributes.addFlashAttribute("pedidoError", "No se encontró un cliente asociado a la cuenta autenticada.");
+            return "redirect:/cliente/pedidos";
+        }
+
+        Pedido pedido = pedidoRepositorio.findById(id).orElse(null);
+        if (pedido == null || pedido.getCliente() == null
+                || !pedido.getCliente().getIdCliente().equals(cliente.getIdCliente())) {
+            redirectAttributes.addFlashAttribute("pedidoError", "No puedes ver el detalle de ese pedido.");
+            return "redirect:/cliente/pedidos";
+        }
+
+        model.addAttribute("perfilDisponible", true);
+        model.addAttribute("emailCuenta", usuario != null ? usuario.getEmail() : "");
+        model.addAttribute("pedido", pedido);
+        model.addAttribute("detalles", detallePedidoRepositorio.findByPedido_IdPedido(id));
+        model.addAttribute("activeClientMenu", "pedidos");
+
+        return "client/detalle-pedido";
     }
 
     @PostMapping("/pedidos/{id}/cancelar")
